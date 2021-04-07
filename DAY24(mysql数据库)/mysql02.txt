@@ -1,0 +1,173 @@
+Create database mysqlhomework2;
+Use mysqlhomework2;
+
+Create table emp(
+	empno int(10) primary key,
+	name varchar(255),
+	job varchar(255),
+	mgr int(10),
+	hireddate date,
+	sal float(10.00),
+	comm float(10.00),
+	depths int(10)
+); 
+
+Create table dept(
+	depths int(10) primary key,
+	name varchar(255),
+	loc varchar(255)
+);
+
+Create table salgrade(
+	grade int(10) primary key,
+	losal int(10),
+	sisal int(10)
+);
+
+Create table profit(
+	year int(10),
+	zz int(10)
+);
+
+Insert into emp(empno,name,job,mgr,hireddate,sal,comm,depths) values(1001,'甘宁','文员',1013,20001217,8000.00,null,20);
+Insert into emp(empno,name,job,mgr,hireddate,sal,comm,depths) values(1002,'黛绮丝','销售员',1006,20010220,16000.00,3000.00,30);
+Insert into emp(empno,name,job,mgr,hireddate,sal,comm,depths) values(1003,'殷天正','销售员',1006,20010222,12500.00,5000.00,30);
+Insert into emp(empno,name,job,mgr,hireddate,sal,comm,depths) values(1004,'刘备','经理',1009,20010402,29750.00,null,20);
+Insert into emp(empno,name,job,mgr,hireddate,sal,comm,depths) values(1005,'谢逊','销售员',1006,20010928,12500.00,14000.00,30);
+Insert into emp(empno,name,job,mgr,hireddate,sal,comm,depths) values(1006,'关羽','经理',1009,20010501,28500.00,null,30);
+Insert into emp(empno,name,job,mgr,hireddate,sal,comm,depths) values(1007,'张飞','经理',1009,20010901,24500.00,null,10);
+Insert into emp(empno,name,job,mgr,hireddate,sal,comm,depths) values(1008,'诸葛亮','分析师',1004,20070419,30000.00,null,20);
+Insert into emp(empno,name,job,mgr,hireddate,sal,comm,depths) values(1009,'曾阿牛','董事长',null,20011117,50000.00,null,10);
+Insert into emp(empno,name,job,mgr,hireddate,sal,comm,depths) values(1010,'韦一笑','销售员',1006,20010908,15000.00,0.00,30);
+Insert into emp(empno,name,job,mgr,hireddate,sal,comm,depths) values(1011,'周泰','文员',1008,20070523,11000.00,null,20);
+Insert into emp(empno,name,job,mgr,hireddate,sal,comm,depths) values(1012,'程普','文员',1006,20011203,9500.00,null,30);
+Insert into emp(empno,name,job,mgr,hireddate,sal,comm,depths) values(1013,'庞统','分析师',1004,20011203,30000.00,null,20);
+Insert into emp(empno,name,job,mgr,hireddate,sal,comm,depths) values(1014,'黄盖','文员',1007,20020123,13000.00,null,10);
+Insert into emp(empno,name,job,mgr,hireddate,sal,comm,depths) values(1015,'张三','保洁员',1001,20130501,80000.00,50000.00,50);
+
+Insert into dept values(10,'教研部','北京');
+Insert into dept values(20,'学工部','上海');
+Insert into dept values(30,'销售部','广州');
+Insert into dept values(40,'财务部','武汉');
+
+Insert into salgrade values(1,7000,12000);
+Insert into salgrade values(2,12010,14000);
+Insert into salgrade values(3,14010,20000);
+Insert into salgrade values(4,20010,30000);
+Insert into salgrade values(5,30010,99990);
+
+Insert into profit values(2010,100);
+Insert into profit values(2011,150);
+Insert into profit values(2012,250);
+Insert into profit values(2013,800);
+Insert into profit values(2014,1000);
+
+
+1. 查出至少有一个员工的部门。显示部门编号、部门名称、部门位置、部门人数。
+Select
+	e.depths,d.name,d.loc,count(e.empno)
+From 
+	emp e,dept d
+Where 
+	e.depths=d.depths
+Group by
+	depths
+Having
+	count(e.empno)>0;
+
+
+2. 列出所有员工的姓名及其直接上级的姓名。
+Select 
+	a.name '员工',b.name '领导'
+From
+	emp a
+left join
+	emp b
+On
+	a.mgr=b.empno;
+
+3. 列出受雇日期早于直接上级的所有员工的编号、姓名、部门名称。
+Select 
+	a.empno ‘员工编号’,a.name '员工姓名',d.name '部门名称'
+From
+	emp a,
+	emp b,
+	dept d
+Where
+	a.mgr=b.empno and a.hireddate<b.hireddate and a.depths=D.DEPTHS;
+
+4. 列出部门名称和这些部门的员工信息，同时列出那些没有员工的部门。
+Select 
+	d.name,e.empno,e.name,e.job,e.mgr,e.hireddate,e.sal,e.comm
+From
+	dept d
+Left join
+	emp e
+On
+	d.depths=e.depths;
+
+5. 列出最低薪金大于15000的各种工作及从事此工作的员工人数。
+Select
+	job,count(empno)
+From
+	emp 
+group by
+	job
+Having
+	min(ifnull(comm,0)+sal)>15000;
+6. 列出在销售部工作的员工的姓名，假定不知道销售部的部门编号。
+Select 
+	name
+From
+	emp
+Where
+	job='销售员';
+
+7. 列出薪金高于公司平均薪金的所有员工信息，所在部门名称，上级领导，工资等级。
+Select
+	e.empno,e.name,e.job,e.mgr,e.hireddate,e.sal,e.comm,e.depths,d.name,s.grade
+From 
+	emp e
+Join
+	dept d
+On
+	e.depths=d.depths
+Join
+	salgrade s
+On
+	(ifnull(e.comm,0)+sal) between s.losal and sisal and (ifnull(e.comm,0)+sal)>(select avg((ifnull(comm,0)+sal)) from emp);
+
+
+
+8.列出与庞统从事相同工作的所有员工及部门名称。
+Select
+	e.name,d.name
+From 
+	emp e,dept d
+Where
+	e.depths=d.depths and (select job from emp where name='庞统')=e.job;
+
+9.列出薪金高于在部门30工作的所有员工的薪金　的员工姓名和薪金、部门名称。
+Select
+	e.name,(ifnull(e.comm,0)+sal) '总工资',d.name
+From
+	emp e, dept d
+Where 
+	e.depths=d.depths and (ifnull(e.comm,0)+sal)>(select max(ifnull(comm,0)+sal) from emp where depths=30);
+
+10.查出年份、利润、年度增长比。
+
+select 
+	a.year,a.zz,a.zz/b.zz '年度增长比率'
+From
+	profit a
+Join
+	profit b
+On
+	a.year=b.year+1 ;
+
+
+
+
+
+
