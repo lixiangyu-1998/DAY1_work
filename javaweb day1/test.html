@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--需求 1：在网页上显示 我是字体标签 ，并修改字体为 宋体，颜色为红色。-->
+<font color="red" face="宋体" size="7">我是字体标签</font><br/>
+
+<!--需求 2：把 <br> 换行标签 变成文本 转换成字符显示在页面上-->
+我是&lt;br&gt;标签<br/>
+
+<!--需求 3：演示标题 1 到 标题 6 -->
+<h1>align属性是对齐属性</h1>
+<h2 align="left">左对齐</h2>
+<h3 align="right">右对齐</h3>
+<h4 align="center">居中对齐</h4>
+<h5>wuhu。。。</h5>
+<h6>起飞。。。</h6>
+
+<!--需求 4：普通的 超连接。-->
+<a href="https://www.baidu.com">百度</a><br/>
+<a href="https://www.baidu.com" target="_self">百度_self</a><br/>
+<a href="https://www.baidu.com" target="_blank">百度_blank</a><br/>
+
+<!--需求 5：使用无序，列表方式 绫波丽，明日香，真希波，碇真嗣。展示出来-->
+<ul type="none">
+    <li>绫波丽</li>
+    <li>明日香</li>
+    <li>真希波</li>
+    <li>碇真嗣</li>
+</ul><br/>
+
+<!--需求 6：使用 img 标签显示一张照片。并修改宽高，和边框属性-->
+<img src="20210413175143.png"
+     width="500" height="260" border="1" alt="找不到图片"/>
+
+<!--需求 7：做一个 带表头的 ，三行，三列的表格，并显示边框 -->
+<table border="1">
+    <tr>
+        <th>1.1</th>
+        <th>1.2</th>
+        <th>1.3</th>
+    </tr>
+    <tr>
+        <th>2.1</th>
+        <th>2.2</th>
+        <th>2.3</th>
+    </tr>
+    <tr>
+        <th>3.1</th>
+        <th>3.2</th>
+        <th>3.3</th>
+    </tr>
+</table>
+
+<!--需求 8：修改表格的宽度，高度，表格的对齐方式，单元格间距。-->
+
+<table align=center border="1" width="300" height="300" cellspacing="0">
+    <tr>
+        <th>1.1</th>
+        <th>1.2</th>
+        <th>1.3</th>
+    </tr>
+    <tr>
+        <th>2.1</th>
+        <th>2.2</th>
+        <th>2.3</th>
+    </tr>
+    <tr>
+        <th>3.1</th>
+        <th>3.2</th>
+        <th>3.3</th>
+    </tr>
+</table>
+
+<!--需求 9：新建一个五行，五列的表格，
+第一行，第一列的单元格要跨两列，
+第二行第一列的单元格跨两行，
+第四行第四 列的单元格跨两行两列。-->
+<table width="500" height="500" cellspacing="0" border="1">
+    <tr>
+        <th colspan="2">1.1</th>
+        <th>1.2</th>
+        <th>1.3</th>
+        <th>1.4</th>
+    </tr><tr>
+        <th rowspan="2">2.1</th>
+        <th>2.2</th>
+        <th>2.3</th>
+        <th>2.4</th>
+        <th>2.5</th>
+    </tr><tr>
+        <th>3.2</th>
+        <th>3.3</th>
+        <th>3.4</th>
+        <th>3.5</th>
+    </tr><tr>
+        <th>4.1</th>
+        <th>4.2</th>
+        <th>4.3</th>
+        <th rowspan="2" colspan="2">4.4</th>
+    </tr><tr>
+        <th>5.1</th>
+        <th>5.2</th>
+        <th>5.3</th>
+    </tr>
+</table>
+
+<!-- 需求 10：ifarme 标签它可以在一个 html 页面上,打开一个小窗口,去加载一个单独的页面(内嵌窗口 了解即可）-->
+<iframe src="test1.html" width="300" height="300">
+
+</iframe>
+
+<!--需求 11:创建一个个人信息注册的表单界面。包含用户名，密码，确认密码。性别（单选），兴趣爱好（多选），
+国籍（下 拉列表）。隐藏域，自我评价（多行文本域）。重置，提交。-->
+<form>
+    用户名称：<input type="text" value="请输入用户名"/><br/>
+    用户密码：<input type="password" value="请输入密码"/><br/>
+    确认密码：<input type="password" value="请再次输入密码"/><br/>
+    性别：<input type="radio" name="sex"/>男<input type="radio" name="sex" checked="checked"/>女<br/>
+    兴趣爱好：<input type="checkbox" checked="checked"/>java
+    <input type="checkbox"/>java<input type="checkbox"/>还是java<br/>
+    国籍:<select>
+    <option>-----请选择----</option>
+    <option>北欧</option>
+    <option>越南</option>
+    <option>家乡</option>
+    <option selected="selected">此生无悔二次元</option>
+</select><br/>
+    自我评价：<textarea rows="10" cols="20">
+    说点什么吧
+</textarea><br/>
+    <input type="reset" value="重置"/>
+    <input type="submit"/>
+    
+</form>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
