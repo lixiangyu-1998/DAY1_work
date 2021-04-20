@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        // function fun(){
+        //     alert("无参函数 fun() 被调用了");
+        // }
+        // fun();
+        // function funAdd(a,b){
+        //     var sum=a+b;
+        //     return sum;
+        // }
+        // alert("有参函数funAdd()被调用了  "+"a+"+"b"+"的结果是："+funAdd(1,2));
+        // var funAdd1=function(a,b) {
+        //     var sum1 = a + b;
+        //     return sum1;
+        // }
+        // alert("有参函数funAdd1()被调用了  " + "a+" + "b" + "的结果是：" + funAdd1(1, 2));
+
+        // function sum2(a,b){
+        //     var aa=0;
+        //     for(var i=0;i<arguments.length;i++){
+        //         if(typeof(arguments[i])=="number"){
+        //             aa+=arguments[i];
+        //         }
+        //     }
+        //     return aa;
+        // }
+        // alert(sum2(1,2,3,4,5,"ok",6,7,8,9));
+
+        // function sum2(a,b) {
+        //     var aa=0;
+        //     for(var i=0;i<arguments.length;i++){
+        //         if(typeof(arguments[i])=="number"){
+        //             aa+=arguments[i];
+        //         }
+        //     }
+        //     return aa;
+        // }
+        // alert(sum2(1,2,3,4,"ok",5,6,7,8,9));
+        // function onloadfun(){
+        //     alert("静态注册onload事件")
+        // }
+        // window.onload=function(){
+        //     alert("动态注册的onload事件");
+        // }
+
+        // function onclickFun(){
+        //     alert("静态注册onclick")
+        // }
+        window.onload=function(){
+            var button001 = document.getElementById("button001");
+            button001.onclick=function(){
+                alert("动态注册onclick事件")
+            }
+        }
+
+    </script>
+<!--    <script type="text/javascript">-->
+<!--        var arr=[true,1];-->
+<!--        alert(arr.length);-->
+<!--        for(var i=0;i<arr.length;i++){-->
+<!--            alert(arr[i]);-->
+<!--        }-->
+
+<!--    </script>-->
+<!--    <script type="text/javascript" src="hello%20javaScript.js"></script>-->
+
+<!--    <script type="text/javascript">-->
+<!--        alert("hello javaScript")-->
+<!--    </script>
+
+onload="onloadfun();"
+-->
+</head>
+<body>
+<button id="button001">动态注册</button>
+
+</body>
+</html>

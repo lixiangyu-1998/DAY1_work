@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        function onclickFun(){
+            var username = document.getElementById("username");
+            var usernameText = username.value;
+            var patt=/^\w{5,12}$/;
+            var usernameSpan = document.getElementById("usernameSpan");
+
+            if(patt.test(usernameText)){
+                usernameSpan.innerHTML="用户名合法"
+            }else{
+                usernameSpan.innerHTML="用户名不合法"
+
+            }
+        }
+
+    </script>
+</head>
+<body>
+<!-- 需求：当用户点击了较验按钮，要获取输出框中的内容。然后验证其是否合法。-->
+<!-- 验证的规则是：必须由字母，数字。下划线组成。并且长度是 5 到 12 位。-->
+用户名：<input type="text" id="username" values="请输入用户名"/>
+<span id="usernameSpan" style="color:blue;"></span>
+<button onclick="onclickFun()">校验</button>
+</body>
+</html>
