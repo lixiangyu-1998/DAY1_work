@@ -1,0 +1,40 @@
+
+作业
+注册 登录 查询所有商品
+
+用户表                    商品表
+uid                       pid
+username *                pname
+password *                price
+isalive                   pimg  商品图片路径
+truename *                pdesc
+gender   *
+age      *
+email    *
+
+要求：
+页面的样式使用bootstrap
+
+有必填项 有邮箱验证
+必须全部验证通过才能提交
+
+登录
+通过 用户名 密码 查询是否有记录
+如果有 放入session 并进入主页（商品列表页）
+如果没有 跳回登录页面
+
+显示所有商品
+取session中的登录信息 如果没有 跳转到登录页面
+所有的jsp都需要有这个功能 所以可以写单独写一段代码 
+通过include在每个页面引入
+
+
+
+
+
+
+
+
+
+
+

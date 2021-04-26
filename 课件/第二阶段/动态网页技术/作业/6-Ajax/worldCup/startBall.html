@@ -1,0 +1,544 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jweixin.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/baseh.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<style>
+	*{touch-action: none; }
+	</style>
+	<body>
+		<div class="bgBall">
+			<img src="img/piaofu.png" class="piaofu fu1"/>
+			<img src="https://www.baidu.com/img/bd_logo1.png" class="personC"/>
+			<span class="uname">测试用户</span>
+			<div class="_rule">
+				<span id="guize">规则&nbsp;|</span>
+				<span id="myCard">我的卡片&nbsp;|</span>
+				<span id="MyReward">我的奖励</span>
+			</div>
+			<img src="img/shoumenyuan.png" class="shouMenYuan"/>
+			<img src="img/baller_start.png" class="tiqiu"/>
+			<img src="img/ball_start.png" class="ballready" id="ballready"/>
+			<img src="img/1.png" class="huxian" id="huxian"/>
+			<div class="shemen">
+				<h4>剩余次数：<span id="goalcount" style="color: #FF7F00;font-size: 6vw;"></span></h4>
+				<img id="yaoqing" src="img/btn_invite.png" class="yaoqing"/>
+				<a href="javascript:;" class="clickSm"></a>
+			</div>
+		</div>
+		
+		<!--兑换奖品-->
+		<div class="bgactive" id="cct">
+			<div class="prize1" style="height: 65vw;">
+				<div class="youxi">兑换奖品</div>
+				<img src="img/icon_close.png" class="icon_close_noinit"/>
+				<div class="mui-content-padded cctbg" style="height: 45vw;text-align: center;">
+					<h5 class="shuxue">(<span id="remainPrize"></span>份/<span id="totalPrize"></span>份)</h5>
+				</div>
+				<a class="wanyouxi_noinit2" id="sureDH" style="margin-bottom: -13vw;">确认兑换</a>
+			</div>
+		</div>
+
+		<!--游戏规则-->
+		<div class="bgactive" id="gamerule">
+			<div class="gamerule" >
+				<div class="youxi">游戏规则</div>
+				<img src="img/icon_close.png" class="icon_close_noinit"/>
+				<div id = "summary" class="mui-content-padded">
+<!-- 					<p>１、活动时间：2018年６月</p>
+					<p>２、陕西移动客户专享；同一手机号码仅限中奖一次；</p>
+					<p>３、客户每天默认有1次参与踢球“射门”的机会，客户可通过分享活动邀请好友助力“加油”来获取一次机会，分享活动链接中必须有2位及以上好友成功“加油”，客户才能额外获得一次射门机会；</p>
+					<p>４、射门进球客户可随机获得一张卡片，未进球则可按照提示邀请好友助力“加油”；</p>
+					<p>５、助力加油的好友必须关注微信公众号才可进入活动，点击分享页面“加油”为好友助力，同一好友只能为同一客户“加油”一次；</p>
+					<p>６、客户通过射门收集到“大力神杯”卡片，即可前往“兑换奖品”，奖品数量有限，先到先得！</p>
+					<p>７、号码欠费、未进行实名制认证、处于非正常状态的用户，流　量可能无法成功到帐。其中携号转网、集团用户暂时无法参与，流量无法到账。</p>
+					<p>８、对任何通过不正当手段参与者，中国移动有权在不事先通　知的情况下取消其参加活动及得奖资格。</p> -->
+				</div>
+			</div>
+		</div>
+		<!--我的卡片，是否集齐-->
+		<div class="bgactive" id="mykapian">
+			<div class="card1">
+				<div class="youxi">我的卡片</div>
+				<img src="img/icon_close.png" class="icon_close_noinit"/>
+				<div class="mui-content-padded imgcard" style="height: 70vw;text-align: center;">
+					<div id="zjCard">
+						<img id="card1" />
+						<img id="card2" />
+						<img id="card3" />
+						<img id="card4" />
+					</div>
+					<h5 id="get_all_text">您的卡片未集齐，继续游戏去收集卡片吧，我在这等你呦！</h5>
+				</div>
+				<a class="wanyouxi_noinit" id="no_get_all">去玩游戏</a>
+				<a class="wanyouxi_noinit2" id="get_all">兑换奖励</a>
+			</div>
+		</div>
+		<!--我的奖品，还没有兑换奖品的情况-->
+		<div class="bgactive" id="myprize">
+			<div class="prize1">
+				<div class="youxi">提示</div>
+				<img src="img/icon_close.png" class="icon_close_noinit"/>
+				<div class="mui-content-padded imgcard" style="height: 40vw;text-align: center;">
+					<h5>您还没有兑换奖品！</h5>
+					<p>赶快玩游戏集齐卡片兑换奖品吧！</p>
+				</div>
+				<a class="wanyouxi_noinit" id="" style="margin-bottom: -13vw;">开始游戏</a>
+			</div>
+		</div>
+		<!--我的奖品，已兑换奖品的情况-->
+		<div class="bgactive" id="myprizeSu">
+			<div class="duihuan">
+				<div id="duihuantxt"></div>
+				<img src="img/icon_close2.png" class="closeDH"/>
+			</div>
+		</div>
+		<!--进球弹窗-->
+		<div class="bgactive" id="jinqiu">
+			<div class="card1 gongxi">
+				<div class="youxi">恭喜你进球啦!</div>
+				<img src="img/icon_close.png" class="icon_close"/>
+				<div class="mui-content-padded" style="height: 100vw;text-align: center;">
+					<div class="piaodai">
+						<img src="img/card_da.png" style="width: 54%;" id="cardImg"/>
+					</div>
+					<h5 style="color: #ffb019;font-size: 6vw;">恭喜获得“<span id="cardName" style="font-size:8vw;"></span>”卡片！</h5>
+				</div>
+				<a class="wanyouxi">继续玩</a>
+			</div>
+		</div>
+		<!--未进球弹窗-->
+		<div class="bgactive" id="weijinqiu">
+			<div class="prize1">
+				<div class="youxi">很遗憾！</div>
+				<img src="img/icon_close.png" class="icon_close"/>
+				<div id="weijinqiu_text" class="mui-content-padded imgcard" style="height: 40vw;text-align: center;">
+					<p>您未进球！</p>
+					<p>再来一次哦~</p>
+				</div> 
+				<a class="wanyouxi" id="nogoal_go_on" style="margin-bottom: -13vw;">继续游戏</a>
+				<a class="wanyouxi" id="nogoal_stop" style="margin-bottom: -13vw;display: none;">次数用尽</a>
+			</div>
+		</div>
+		<!--次数用尽--> 
+		<div class="bgactive" id="nogoalcount">
+			<div class="prize1" style="height:70vw;">
+				<div class="youxi">提示</div>
+				<img src="img/icon_close.png" class="icon_close_noinit"/>
+				<div class="mui-content-padded imgcard" style="height: 50vw;text-align: center;padding:5vw 0 0 0;">
+					<h5>您的次数用完啦！</h5>
+					<p>邀请你的朋友来为你加油吧！<span style="color:#ffb019;">2个以上  </span></br>
+					的朋友加油可以获得<span style="color:#ffb019;"> 1次踢球机会</span>哦！
+					</p>
+				</div>
+				<a class="wanyouxi_noinit2" id="yaoqing2" style="margin-bottom: -13vw;">邀请好友</a>
+			</div>
+		</div>
+		<!--兑换成功弹窗-->
+		<div class="bgactive" id="exchange">
+			<div class="exchange">
+				<div class="youxi">兑换成功！</div>
+				<img src="img/icon_close.png" class="icon_close"/>
+				<div class="mui-content-padded imgcard" style="height: 40vw;text-align: center;">
+					<h5 style="color: #ffb019;font-size: 6vw;">恭喜您获得<span id="getPrizeName"></span>！</h5>
+					<p>赠送话费正在路上，次月23日前到账，</br>请耐心等待！</p>
+				</div> 
+				<a class="wanyouxi">确定</a>
+			</div>
+		</div>
+		<!--已兑换过弹窗-->
+		<div class="bgactive" id="changed">
+			<div class="exchange">
+				<div class="youxi">提示！</div>
+				<img src="img/icon_close.png" class="icon_close"/>
+				<div class="mui-content-padded imgcard" style="height: 40vw;text-align: center;">
+					<h5 style="color: #ffb019;font-size: 6vw;">已兑换过奖励！</h5>
+					<p>赠送话费正在路上，次月23日前到账，</br>请耐心等待！</p>
+				</div> 
+				<a class="wanyouxi">确定</a>
+			</div>
+		</div>
+		<!--奖品兑完了弹窗-->
+		<div class="bgactive" id="noprize">
+			<div class="exchange">
+				<div class="youxi">提示！</div>
+				<img src="img/icon_close.png" class="icon_close"/>
+				<div class="mui-content-padded imgcard" style="height: 40vw;text-align: center;">
+					<h5 style="color: #ffb019;font-size: 6vw;">奖品被兑完了！</h5>
+					<p>很遗憾!下次早点来哦~</p>
+				</div> 
+				<a class="wanyouxi">确定</a>
+			</div>
+		</div>
+		<!--好友助力弹窗-->
+		<div class="bgactive" id="friendzhuli">
+			<div class="prize1">  
+				<div class="youxi">邀请好友助力！</div>
+				<img src="img/01.png" class='jiantou'/>
+				<img src="img/icon_close.png" class="icon_close_noinit"/>
+				<div class="mui-content-padded imgcard" style="height: 40vw;text-align: center;">
+					<p>邀请你的朋友来为你加油吧！</br>
+					<span style="color:#ffb019;">2个以上  </span>的朋友加油</br>
+					可以获得<span style="color:#ffb019;"> 一次踢球机会</span>哦！
+					</p>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			
+			//声明游戏使用的变量
+			var num;//射门指针方向
+			var boole;//左右摆动方向
+			//var _num1;//守门员位置
+			var _im;//守门员移动事件
+			var num1=1;//守门员初始位置
+			var boole1=true;//守门员摆动方向
+			var intt2;//守门员随机位置事件
+			var intt;//左右摆动循环事件
+			var goalcount;//剩余射门次数
+			var isgetall;//是否集齐
+			var myarr; //用数组确认 方便显示哪张卡片已获得 哪张卡片未获得
+			var userphone;//登陆用户手机号
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			})
+			$(function(){
+				//规则弹出
+				$("#guize").on('tap',function(){
+					$("#gamerule").fadeIn();
+				})
+				//我的卡片弹出
+				$("#myCard").on('tap',function(){
+					//从后台取数据 看看哪张图片已获取 哪张未获取
+					getCardInfo()
+					$("#mykapian").fadeIn();
+					if(isgetall){
+						$("#get_all_text").html("已经集齐所有卡片</br> 快去兑换奖励吧！");
+						$("#no_get_all").css("display","none"); 
+						$("#get_all").css("display","block");
+						$("#get_all").bind("tap",function(){
+							$(this).unbind("tap");
+
+					  });
+						
+					}else{
+						$("#get_all_text").html("您的卡片未集齐，继续游戏去收集卡片吧，我在这等你呦！");
+						$("#get_all").css("display","none");
+						$("#no_get_all").css("display","block");
+					}
+
+					
+				})
+	//			我的奖品弹出
+				$("#MyReward").on('tap',function(){
+					//先发送是否已兑奖查询
+					
+					mui.ajax('../prizeInfo/getPrizes',{
+							data:{},
+						    headers: {
+						        'x-auth-token':authToken
+						    },
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型  
+					//		async:false,
+							success:function(data){
+								//服务器返回响应，根据响应结果，分析是否登录成功；
+								console.log(data)
+								var returnCode = data.code;
+								switch(returnCode)
+								{
+									case 0:
+										var prizeInfo = data.data;
+										if(prizeInfo.length>0){
+											$("#myprizeSu").fadeIn();
+											var prizehtml = '';
+											prizeInfo.forEach(function(value, index, array) {
+												prizehtml+='<h4><span style="font-size: 8vw;">'+value.prizeName+'</span></h4>'
+											              +'<h5 class="timeSu">'+value.crtdateFormatter+'</h5>';
+											});
+											$("#duihuantxt").html(prizehtml);
+										}else{
+											$("#myprize").fadeIn();
+										}
+										break;
+									default:
+									  mui.alert('网络错误，请重试！queryGiveRecords')
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								//异常处理；
+								console.log(type);
+							}
+						});
+
+				})
+
+				//邀请好友页面
+				$("#yaoqing").on('tap',function(){
+					if(getChannal()==1){
+						share('http://wx.10086.cn/shXi/sxxa_worldcup/common/shareOauthAPP?authToken=' + authToken+'&mobile='+userphone+'&channal=1',
+										'世界杯“最佳射手”，快给TA加油！',
+										'这里有100000元话费送给最佳射手，快来！');
+					}else{
+						$("#friendzhuli").fadeIn();
+					}
+					
+				});
+				$("#yaoqing2").on('tap',function(){
+					$(".bgactive").hide();
+					if(getChannal()==1){
+						share('http://wx.10086.cn/shXi/sxxa_worldcup/common/shareOauthAPP?authToken=' + authToken+'&mobile='+userphone+'&channal=1',
+										'世界杯“最佳射手”，快给TA加油！',
+										'这里有100000元话费送给最佳射手，快来！');
+					}else{
+						$("#friendzhuli").fadeIn();
+					}
+				});
+				//关闭按钮不重置游戏
+				$(".wanyouxi_noinit,.icon_close_noinit").on('tap',function(){
+					$(".bgactive").fadeOut();
+				})
+				//关闭按钮重置游戏
+				$(".icon_close,.closeDH,.wanyouxi").on('tap',function(){
+					$(".bgactive").fadeOut();
+					init();
+				})
+				//首次初始化游戏
+				init();
+				//卡片连接地址从后台取
+				initCardSrc();
+				
+			})
+
+			//获取后台卡片配置信息
+			function initCardSrc(){
+				$("#card1").prop("src","img/card_zui.png");
+				$("#card2").prop("src","img/card_jia.png");
+				$("#card3").prop("src","img/card_she.png");
+				$("#card4").prop("src","img/card_shou.png");
+			}
+			
+			//游戏重置
+			function init(){
+				//清除方向摆动时间 防止重复开启
+				clearInterval(intt);
+				clearInterval(_im);
+				//射门方向
+				num=1;
+				//射门方向向左还是向右
+				boole=true;
+				
+				
+				//守门员随机出现的位置
+				//$(".shouMenYuan").css('margin-left',(_num1*15+12)+'vw');
+				//踢球方向摆动事件开启
+				intt=setInterval('setTime()',150);
+				//守门员随机出现//守门员随机数字
+				_im=setInterval('setTime2()',200);
+				
+				$('.tiqiu').attr('src',"img/baller_start.png");
+				$("#ballready").removeClass();
+				$("#ballready").addClass("ballready");
+				$("#ballready").attr('src',"img/ball_start.png");
+				//获取剩余次数
+				setGoalCount();
+				//获取卡片信息
+				getCardInfo();
+				//初始化踢球按钮
+				initStartBall();
+			}
+			//设置方向针摇摆
+			function setTime(){
+				if(boole){
+					num++;
+					if(num>=5){
+						boole=false;
+					}
+				}else{
+					num--;
+					if(num<=1){
+						boole=true;
+					}
+				}
+				$("#huxian").attr('src',"img/"+num+".png");
+			}
+			/*进球后显示获得哪张卡片*/
+			function showCard(cardDesc,imgUrl){
+				$("#cardImg").prop("src",imgUrl);
+				$("#cardName").html(cardDesc);
+			}
+			//读取本地图片
+			function showCard2(cardDesc,rank){
+				switch(rank){
+					case 1:$("#cardImg").prop("src","img/card_zui.png");break;
+					case 2:$("#cardImg").prop("src","img/card_jia.png");break;
+					case 3:$("#cardImg").prop("src","img/card_she.png");break;
+					case 4:$("#cardImg").prop("src","img/card_shou.png");break;
+				}
+				$("#cardName").html(cardDesc);
+			}
+			/*检测哪个卡片变灰 和是否获得了全部卡片
+			  用数组的4个位置确定对应卡片是否已获取*/
+			function showCardAll(arr){
+				var isgetall= true;
+				if(arr[0]=="1"){
+					$("#card1").removeClass("gray");
+				}else{
+					$("#card1").addClass("gray");
+					isgetall = false;
+				}
+				if(arr[1]=="2"){
+					$("#card2").removeClass("gray");
+				}else{
+					$("#card2").addClass("gray");
+					isgetall = false;
+				}
+				if(arr[2]=="3"){
+					$("#card3").removeClass("gray");
+				}else{
+					$("#card3").addClass("gray");
+					isgetall = false;
+				}
+				if(arr[3]=="4"){
+					$("#card4").removeClass("gray");
+				}else{
+					$("#card4").addClass("gray");
+					isgetall = false;
+				}
+				return isgetall;
+			}
+			
+			
+			function setTime2(){
+				if(boole1){
+					num1++;
+					if(num1>=5){
+						boole1=false;
+					}
+				}else{
+					num1--;
+					if(num1<=1){
+						boole1=true;
+					}
+				}
+				$(".shouMenYuan").css('margin-left',num1*14+'vw');
+			}
+			
+			
+			/************************************************
+			 * 需要做的任务
+			 1.剩余射门次数由后台读取 每个新用户默认20次  踢一次少一次
+			 2.踢球之后把是否进球状态传递给后台 后台记录 并计算得到的卡片 把得到的卡片信息返回给前台并显示
+			 3.点击获得的卡片按钮时 由后台查询该用户获得了哪些卡片 并把信息返回给前台
+			 
+			 
+			 用户
+			 
+			 用户剩余次数
+			 
+			 用户进球获得的图片
+			 
+			 用户获得的所有图片
+			 
+			 
+			 接口1 获取用户剩余次数
+			 
+			 参数   无
+			返回数据     次数  数字
+			
+			
+			接口2 用户进球获得的图片
+			 
+			 参数    是否进球 0/1
+			返回数据    图片名称
+			                   图片编号
+			 
+			接口3 用户获得的所有图片
+			 
+			 参数    无
+			返回数据    图片编号列表
+			
+			 ************************************************/
+			
+			
+			/*设置剩余次数 每次初始化时从后台获取*/
+			function setGoalCount(){
+				//从后台取用户剩余次数
+				goalcount = 0;
+				$("#goalcount").html(goalcount);
+				
+				
+			}
+			//卡片获取情况
+			function getCardInfo(){
+				myarr = ["1","2","3","4"];
+				//查询用户获得了哪些卡片
+				isgetall = showCardAll(myarr);//决定哪个图片变色;
+			}
+			
+			function initStartBall(){
+				//绑定踢球按钮
+				$('.clickSm').bind('tap', function() {
+					/*如果有剩余次数则踢球 如果没有则弹窗说明次数用尽*/
+					if(goalcount>0){
+
+						//发请求时。判断_num1+1与num是否相等即可 
+						clearInterval(intt);
+						
+					    $(this).unbind('tap');
+					    $('.tiqiu').attr('src',"img/baller_tichu.png");
+					    //进球使用进球动画 未进球使用未进球动画
+/*					    if(num1==num){
+					    	$("#ballready").attr('src',"img/balldongtai.gif").addClass("_line"+num+"_nogoal");
+					    }else{
+					    	$("#ballready").attr('src',"img/balldongtai.gif").addClass('_line'+num);
+					    }*/
+					   	$("#ballready").attr('src',"img/balldongtai.gif").addClass('_line'+num);
+						var o = document.getElementById("ballready");
+						o.addEventListener("webkitAnimationEnd", function() {
+					       $("#ballready").attr('src',"img/ball_start.png");
+					    })
+						//过一段访问后台 保证动画效果展示完毕
+						setTimeout(function(){
+							clearInterval(_im);
+							var goStatus;
+							goStatus = num1==num?0:1;
+							//如果坐标相同 代表进球
+							console.log(goStatus);
+							//访问后台 传递是否进球
+							/*****************************************************
+							 * 访问后台把状态传递给后台 后台把需要显示的图片信息返回给前台*/
+							//图 1最 2佳 3射 4手
+							
+							
+							showCard2("最",1);
+							
+							
+							/*****************************************************
+							 * 访问后台把状态传递给后台 后台把需要显示的图片信息返回给前台*/
+							
+							if(goStatus==1){
+								$("#jinqiu").fadeIn();
+							}else{
+								$("#weijinqiu").fadeIn();
+							}
+						},800);
+					}else{
+						$("#nogoalcount").fadeIn();
+					}
+				});
+			}
+			
+
+		</script>
+	</body>
+</html>

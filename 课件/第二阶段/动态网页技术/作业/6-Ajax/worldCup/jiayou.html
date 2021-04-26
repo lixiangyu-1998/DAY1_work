@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+</head>
+<body>
+	<div class="bg">
+		<!-- <img src="img/piaofu.png" onclick="_shared()" class="piaofu"/> -->
+		<img src="img/title1.png" class="_title"/>
+		<p class="jiayou_text">您的好友<span id="friend_name">12345678900</span>邀请你来为他<span style="color: yellow;">助力加油!</span></p>
+		<a class="startGame">为Ta加油</a>
+	</div>
+	
+	<!--加油弹窗-->
+	<div class="bgactive" id="jiayou_success">
+		<div class="exchange">
+			<div class="youxi">提示</div>
+			<img src="img/icon_close.png" class="icon_close"/>
+			<div class="mui-content-padded imgcard" style="height: 40vw;text-align: center;">
+				<h5 style="color: #ffb019;font-size: 6vw;">助力加油成功！</h5>
+				<p>点击下方按钮一起去玩游戏吧！</p>
+			</div> 
+			<a class="wanyouxi">去玩游戏</a>
+		</div>
+	</div>
+	<!--加油弹窗--> 
+	<div class="bgactive" id="jiayou_fail">
+		<div class="exchange">
+			<div class="youxi">提示</div>
+			<img src="img/icon_close.png" class="icon_close"/>
+			<div class="mui-content-padded imgcard" style="height: 40vw;text-align: center;">
+				<h5 style="color: #ffb019;font-size: 6vw;">助力失败</h5>
+				<p>只能为同一好友助力加油一次哦！</p>
+			</div> 
+			<a class="wanyouxi">去玩游戏</a>
+		</div>
+	</div>
+	
+	<script src="js/mui.min.js"></script>
+	<script src="js/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jweixin.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/baseh.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+		customShare('http://wx.10086.cn/shXi/sxxa_worldcup/common/shareOauth2?authToken=' + authToken,
+				'你是不是世界杯最佳射手？',
+				'这里有100000元话费送给最佳射手，快来！');
+		var phone = getUrlParam("mobile");
+		var showphone = phone.substr(0, 3) + '****' + phone.substring(7, 11);
+		//sessionStorage 在session中存储数据 前台使用
+		var ssflag = sessionStorage.getItem("flg");//保存用户访问页面时是否已进入过个人主页
+		var channel = getUrlParam("channel");
+		
+		
+		if("1"== ssflag){
+			$("#jiayou_success").fadeIn();
+		}else if("2"==ssflag){
+			$("#jiayou_fail").fadeIn();
+		}
+		$('.wanyouxi').bind('tap',function(){
+  			$(this).unbind('tap');
+  			location.href='startBall.html?authToken=' + authToken;
+  		});
+		$('.startGame').on('tap',function(){
+			mui.ajax('../game/helpGame',{
+				data:{"phone":phone,"channel":channel},
+			    headers: {
+			        'x-auth-token':authToken
+			    },
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型  
+		//		async:false,
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					//sessionStorage.setItem("flg","0");
+					console.log(data)
+					var returnCode = data.code;
+					switch(returnCode)
+					{
+						case 0:
+							sessionStorage.setItem("flg","1");//加油成功
+							//$("#jiayou_success").fadeIn();
+						 	break;
+						case -1:
+							sessionStorage.setItem("flg","2");//加油失败
+							//$("#jiayou_fail").fadeIn();
+						 	break;
+						default:
+						  mui.alert('网络错误，请重试！queryGiveRecords')
+					}
+					location.href='http://wx.10086.cn/website/personalHome/new/index?secondChannel=55000';
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					console.log(type);
+				}
+			});
+		});
+		
+	  	mui.init({  
+	  		swipeBack: true //启用右滑关闭功能
+	  	});
+	  	$(".icon_close,.wanyouxi").on('tap',function(){
+			$(".bgactive").fadeOut();
+		})
+
+		function initPage(){
+	  		mui.ajax('../config/templateList',{
+				data:{},
+			    headers: {
+			        'x-auth-token':authToken
+			    },
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型  
+		//		async:false,
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log(data)
+					var returnCode = data.code;
+					switch(returnCode)
+					{
+						case 0:
+							var pageInfo = data.data;
+/* 							$(".bg").css({"background":"url("+pageInfo.indexBgUrl+") no-repeat","background-size": "100% 100%"});
+							$("._title").prop("src",pageInfo.themeUrl);
+							$(".piaofu").prop("src",pageInfo.advertiseUrl); */
+							/*由于图片服务器访问不通 图片暂时由本地读取  */
+							$(".bg").css({"background":"url(img/indexbg.png) no-repeat","background-size": "100% 100%"});
+							$("._title").prop("src","img/title1.png");
+							$(".piaofu").prop("src","img/piaofu.png");
+							
+							$(".piaofu").on("tap",function(){
+								location.href = pageInfo.advertiseLink;
+							})
+							$(".startGame").css({"color":"#"+pageInfo.fontColor ,"background-color":"#"+pageInfo.btnColor});
+							document.title = pageInfo.activityName;
+							break;
+						default:
+						  mui.alert('网络错误，请重试！queryGiveRecords')
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					console.log(type);
+				}
+			});
+	  	}
+		function getUrlParam(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if(r != null) return escape(r[2]);
+			return null;
+		}
+	  	initPage();
+	  	$("#friend_name").html(showphone);
+	</script>
+</body>
+</html>

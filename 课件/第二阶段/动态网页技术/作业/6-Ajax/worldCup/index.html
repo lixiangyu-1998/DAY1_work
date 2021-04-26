@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+</head>
+<body>
+	<div class="bg">
+		<img src="img/piaofu.png" onclick="_shared()" class="piaofu"/>
+<!-- 		<img src="img/share_friend.png" class="piaofu2"/> -->
+		<img src="img/title1.png" class="_title"/>
+		<a class="startGame">开始游戏</a>
+
+	</div>
+	<script src="js/mui.min.js"></script>
+	<script src="js/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jweixin.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/baseh.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+
+		customShare('http://wx.10086.cn/shXi/sxxa_worldcup/common/shareOauth2?authToken=' + authToken,
+				'你是不是世界杯最佳射手？',
+				'这里有100000元话费送给最佳射手，快来！');
+	  	mui.init({
+	  		swipeBack: true //启用右滑关闭功能
+	  	});
+	  	$('.startGame').on('tap',function(){
+	  		location.href='startBall.html?authToken=' + authToken;
+	  	})
+		function _shared(){
+			console.log(getChannal())
+			switch (getChannal()){
+				case 0:location.href='http://wx.10086.cn/website/businessPlatform/shopDetail?productId=2777';//微信
+					break;
+				case 1:location.href='http://wx.10086.cn/website/businessPlatform/shopDetail?productId=2777&source=app10086';//APP
+					break;
+				default:
+					break;
+			}
+		}
+	  	if(getChannal()==1){
+	  		initPageApp();
+	  	}else{
+	  		initPage();
+	  	}
+		
+		function initPageApp(){
+			var mobile = encodeURIComponent(window.phone.obtainPhone()); // 加密过的手机号
+			//alert(mobile);
+			mui.ajax('../common/location',{
+				data:{"phone":mobile},
+			    headers: {
+			        'x-auth-token':authToken
+			    },
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型  
+		//		async:false,
+				success:function(data){
+					if(data.code!=0){
+						location.href=data.data.nonLocalUrl;
+					}else{
+						authToken = data.data.authToken;
+						initPage();
+					}
+				}
+			});
+		}
+		function initPage(){
+			//alert(authToken);
+	  		mui.ajax('../config/templateList',{
+				data:{},
+			    headers: {
+			        'x-auth-token':authToken
+			    },
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型  
+		//		async:false,
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log(data)
+					var returnCode = data.code;
+					switch(returnCode)
+					{
+						case 0:
+							var pageInfo = data.data;
+/* 							$(".bg").css({"background":"url("+pageInfo.indexBgUrl+") no-repeat","background-size": "100% 100%"});
+							$("._title").prop("src",pageInfo.themeUrl);
+							$(".piaofu").prop("src",pageInfo.advertiseUrl); */
+							/*由于图片服务器访问不通 图片暂时由本地读取  */
+							$(".bg").css({"background":"url(img/indexbg.png) no-repeat","background-size": "100% 100%"});
+							$("._title").prop("src","img/title1.png");
+							$(".piaofu").prop("src","img/piaofu.png");
+							$(".piaofu").on("tap",function(){
+								if(getChannal()==1){
+									location.href = pageInfo.advertiseLink+"&source=app10086";
+								}else{
+									location.href = pageInfo.advertiseLink;
+								}
+							})
+							//如果是10086app渠道 则显示分享按钮
+							if(getChannal()==1){
+								$(".piaofu").on("tap",function(){
+									location.href = pageInfo.advertiseLink+"&source=app10086";
+								});
+/* 								$(".piaofu2").css("display","block");
+								$(".piaofu2").on("tap",function(){
+									share('http://wx.10086.cn/qinhai/qh_shanxi_worldcup/common/shareOauth2?authToken=' + authToken,
+									'你是不是世界杯最佳射手？',
+									'这里有100000元话费送给最佳射手，快来！');																
+								}); */
+							}else{
+								$(".piaofu").on("tap",function(){
+									location.href = pageInfo.advertiseLink;
+								});
+								//$(".piaofu2").css("display","none");
+							}
+
+							$(".startGame").css({"color":"#"+pageInfo.fontColor ,"background-color":"#"+pageInfo.btnColor});
+							document.title = pageInfo.activityName;
+							break;
+						default:
+						  mui.alert('网络错误，请重试！queryGiveRecords')
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					console.log(type);
+				}
+			});
+	  	}
+
+	</script>
+</body>
+</html>

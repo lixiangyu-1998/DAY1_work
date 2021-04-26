@@ -1,0 +1,1 @@
+代码中使用servletContextListener，在项目启动时加载druid

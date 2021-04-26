@@ -1,0 +1,10 @@
+1省市县3级级联
+
+3张表
+tb_prov      tb_city     tb_country
+prov_code    city_code   coun_code
+prov_name    city_name   coun_name
+             prov_code   city_code
+             
+2编写后台接口 通过ajax技术访问 感受前后端分离的开发方式 
+ 完成踢球抽卡小游戏的部分功能

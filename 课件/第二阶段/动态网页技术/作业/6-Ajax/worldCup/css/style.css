@@ -1,0 +1,574 @@
+﻿body{overflow: hidden;}
+*{margin: 0;padding: 0;font-family:幼圆;}
+a{text-decoration: none;}
+.bg{
+	background: url(../img/indexbg.png) no-repeat;
+	background-size: 100% 100%;
+	width: 100%;
+	height: 100vh;
+	position: relative;
+}
+#summary{overfolw-y:scroll;}
+._title{
+    position: absolute;
+    width: 65vw; 
+    /*height: 17vh;*/
+    top: 10%;
+    left: 50%;
+    margin-left: -31vw;
+    margin-top: -3vh;
+}
+.startGame{
+	position: absolute;
+	width: 50vw;
+    height: 15vw;
+    bottom: 10%;
+    left: 50%;
+    margin-left: -25vw;
+    margin-bottom: -7vw;
+    color: #199943;
+    background-color: #ffec1e;
+    line-height: 15vw;
+    text-align: center;
+    border-radius: 50px;
+    font-size: 6vw;
+    font-weight: 700;
+}
+.piaofu{
+    position: absolute;
+    width: 25vw;
+    top: 32%;
+    left: 26%;
+    margin-left: -25vw;
+    margin-top: -7vh;
+}
+.piaofu2{
+    position: absolute;
+    width: 25vw;
+    top: 29%;
+    left: 100%;
+    margin-left: -25vw;
+    margin-top: -7vh;
+    display:none;
+}
+.fu1{
+	top: 41%;
+}
+.jiayou_text{
+	position: absolute;
+	width: 100%;
+    height: 15vw;
+    bottom: 16%;
+    left: 50%;
+    color: white;
+    font-size: 4vw;
+    margin-left: -50vw;
+    margin-bottom: -7vw;
+	text-align: center;
+}
+.jiayou_btn{
+	position: absolute;
+	width: 50vw;
+    height: 15vw;
+    bottom: 10%;
+    left: 50%;
+    margin-left: -25vw;
+    margin-bottom: -7vw;
+}
+.bgBall{
+	background: url(../img/gamebg.png) no-repeat;
+	background-size: 100% 100%;
+	width: 100%;
+	height: 100vh;
+	position: relative;
+}
+._rule{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 53vw;
+	height: 11vw;
+	border-radius: 0 0 0 10px;
+	background-color: #ffEC1E;
+	line-height: 11vw;
+	text-align: center;
+}
+._rule>span{
+	font-size: 4vw;
+	color: #726908;
+	display:inline-block;
+}
+.jpsy {
+	position: absolute;
+	top: 11vw;
+	right: 2vw;
+	width: 34vw;
+	height: 9vw;
+	background: url(../img/bg123.png) no-repeat;
+	background-size: 100%;
+	line-height: 11vw;
+	text-align: center;
+	font-size: 3vw;
+	color: #4D443F;
+}
+
+.personC{
+	position: absolute;
+	top: 1vw;
+	left: 2vw;
+	width: 12vw;
+	height: 12vw;
+	border-radius: 30%;
+}
+.uname{
+	position: absolute;
+	top: 15vw;
+	left: 2vw;
+	color: white;
+	font-size: large;
+	font-weight: 600;
+	font-family: "微软雅黑";
+	
+}
+.bgactive{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 100;
+    display: none;
+}
+.gamerule{
+    height: 100vw;
+    width: 90%;
+    margin: 7vh auto;
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+}
+.youxi{
+	border-radius: 10px 10px 0 0;
+	height: 20vw;
+	background: url(../img/alertTipBg.png) no-repeat;
+    background-size: 50% 65%;
+	background-position: 90% bottom;
+	background-color: #3fbb5f;
+    color: #fff;
+    line-height: 20vw;
+    text-align: left;
+    font-size: 7vw;
+    padding-left: 5vw;
+}
+.mui-content-padded{
+    height: 100vw;
+    background-color: #fff;
+    overflow-y: hidden;
+    margin: 0;
+    border-radius: 0 0 10px 10px;
+    padding: 5vw;
+	text-align: left;
+	margin-top: -2px;
+}
+.mui-scrollbar-vertical{
+	top: 65px;
+    bottom: -50px;
+    background-color: #d9d9d9;
+}
+.mui-scrollbar-indicator{
+    background-color: rgb(63, 187, 95);
+}
+.mui-content-padded p{margin-bottom: 0;color: #222;}
+.icon_close{
+	position: absolute;
+	top: -9px;
+    right: -12px;
+    width: 13vw;
+    height: 13vw;
+}
+.icon_close_noinit{
+	position: absolute;
+	top: -9px;
+    right: -12px;
+    width: 13vw;
+    height: 13vw;
+}
+.card1{
+	height: 90vw;
+	top: 50%;
+    left: 50%;
+    margin-left: -45vw;
+    margin-top: -45vw;
+    width: 90%;
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+}
+.imgcard img{width: 23%;}
+.imgcard h5{
+	color:#ffb019;
+	font-size: 5vw;
+    margin-top: 4vw;
+	line-height: 2;
+}
+.wanyouxi{
+    position: absolute;
+    width: 55vw;
+    height: 15vw;
+    bottom: 10%;
+    left: 50%;
+    margin-left: -27vw;
+    margin-bottom: -15vw;
+    color: #fff;
+    background-color: #3FBB5F;
+    line-height: 15vw;
+    text-align: center;
+    border-radius: 50px;
+    font-size: 6vw;
+}
+.wanyouxi_noinit{
+    position: absolute;
+    width: 55vw;
+    height: 15vw;
+    bottom: 10%;
+    left: 50%;
+    margin-left: -27vw;
+    margin-bottom: -15vw;
+    color: #fff;
+    background-color: #3FBB5F;
+    line-height: 15vw;
+    text-align: center;
+    border-radius: 50px;
+    font-size: 6vw;
+}
+.wanyouxi_noinit2{
+    position: absolute;
+    width: 55vw;
+    height: 15vw;
+    bottom: 10%;
+    left: 50%;
+    margin-left: -27vw;
+    margin-bottom: -15vw;
+    color: #fff;
+    background-color: #3FBB5F;
+    line-height: 15vw;
+    text-align: center;
+    border-radius: 50px;
+    font-size: 6vw;
+}
+.prize1{
+	height: 60vw;
+	top: 50%;
+    left: 50%;
+    margin-left: -45vw;
+    margin-top: -30vw;
+    width: 90%;
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+}
+.prize1 h5{
+	color:#ffb019;
+	font-size: 6vw;
+    margin-top: 0vw;
+	line-height: 2;
+}
+.prize1 p{
+	color: #222;
+	font-size: 5vw;
+    margin-top: 0vw;
+	line-height: 2;
+}
+.cctbg{
+	background: url(../img/ctt.png) no-repeat;
+	background-size: 90%;
+	background-position: center 25%; 
+	background-color: #fff;
+	}
+h5.shuxue{
+    position: absolute;
+    width: 55vw;
+    height: 9vw;
+    top: 27vw;
+    left: 50%;
+    margin-left: -27vw;
+    margin-top: 11vw;
+    font-size: 5vw;
+    color: #222;
+    font-weight: 400;
+    font-family: 幼圆;
+}
+.exchange{
+	height: 60vw;
+	top: 50%;
+    left: 50%;
+    margin-left: -45vw;
+    margin-top: -30vw;
+    width: 90%;
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+}
+.exchange h5{
+	color:#ffb019;
+	font-size: 6vw;
+    margin-top: 0vw;
+	line-height: 2;
+}
+.exchange p{
+	color: #222;
+	font-size: 4vw;
+    margin-top: 0vw;
+	line-height: 2;
+}
+.wanyouxi:active{color: #fff;}
+.duihuan{
+    height: 46vw;
+    top: 50%;
+    left: 50%;
+    margin-left: -45vw;
+    margin-top: -35vw;
+    width: 90%;
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+    background: url(../img/myprize.png) no-repeat;
+    background-size: 100%;
+}
+.duihuan h4{
+	position: absolute;
+    width: 39vw;
+    height: 9vw;
+    top: 13vw;
+    left: 50%;
+    margin-left: -15vw;
+    margin-top: 7vw;
+}
+.duihuan .timeSu{
+	position: absolute;
+    width: 36vw;
+    height: 9vw;
+    top: 26vw;
+    left: 50%;
+    margin-left: -18vw;
+    margin-top: 7vw;
+    font-size: 4vw;
+    color: #222;
+    font-weight: 700;
+}
+.closeDH{
+	position: absolute;
+    /* width: 12vw; */
+    height: 20vw;
+    bottom: 2px;
+    left: 50%;
+    margin-left: -7vw;
+    margin-bottom: -20vw;
+}
+.shemen{
+    position: absolute;
+    width: 84vw;
+    height: 26vw;
+    bottom: 5%;
+    left: 50%;
+    margin-left: -42vw;
+    margin-bottom: -5vw;
+    background: url(../img/bottomInfo.png) no-repeat;
+    background-size: 100%;
+}
+.shemen h4{
+	position: absolute;
+    width: 28vw;
+    height: 6vw;
+    top: 2px;
+    left: 50%;
+    margin-left: -14vw;
+    margin-top: 5vw;
+    font-size: 4vw;
+    font-weight: 700;
+}
+.yaoqing{
+    position: absolute;
+    height: 6vw;
+    top: 5vw;
+    left: 65%;
+    margin-left: -39vw;
+    margin-top: 8vw;
+}
+.clickSm{
+    position: absolute;
+    width: 21vw;
+    height: 21vw;
+    top: -6vw;
+    left: 50%;
+    margin-left: 19vw;
+    margin-top: 8vw;
+    border-radius: 50%;
+}
+.shouMenYuan{
+	position: absolute;
+    /* width: 21vw; */
+    height: 21vw;
+    top: 18vh;
+    left: 2%;
+}
+.tiqiu{
+    position: absolute;
+    /* width: 21vw; */
+    height: 28vw;
+    top: 64vh;
+    left: 50%;
+    margin-left: -14vw;
+    margin-top: 0vw;
+}
+.ballready{
+    position: absolute;
+    /* width: 21vw; */
+    height: 6vw;
+    top: 76vh;
+    left: 50%;
+    margin-left: -3vw;
+    margin-top: 0;
+}
+.huxian{
+    position: absolute;
+    /* width: 21vw; */
+    height: 16vw;
+    top: 58vh;
+    left: 39%;
+    margin-left: -4vw;
+    margin-top: 0;
+}
+.gongxi{
+	height: 125vw;
+	margin-top: -65vw;
+}
+.piaodai{
+	background: url(../img/piaodai.png) no-repeat;
+    height: 70vw;
+    width: 100%;
+    background-size: 100%;
+}
+.jiantou{
+    position: absolute;
+    width: 24vw;
+    /* height: 34vw; */
+    top: 23vw;
+    left: 71%;
+    margin-left: 0vw;
+    margin-top: -60vw;
+}
+@keyframes ballready1
+{
+    0%   {top: 76vh;margin-left: -3vw;}
+    100% {top: 23vh;margin-left: -34vw;}
+}
+@keyframes ballready2
+{
+    0%   {top: 76vh;margin-left: -3vw;}
+    100% {top: 23vh;margin-left: -22vw;}
+}
+@keyframes ballready3
+{
+    0%   {top: 76vh;}
+    100% {top: 23vh;}
+}
+@keyframes ballready4
+{
+    0%   {top: 76vh;margin-left: -3vw;}
+    100% {top: 23vh;margin-left: 15vw;}
+}
+@keyframes ballready5
+{
+    0%   {top: 76vh;margin-left: -3vw;}
+    100% {top: 23vh;margin-left: 31vw;}
+}
+._line1{
+	animation:ballready1 800ms;
+	animation-fill-mode : forwards;
+}
+._line2{
+	animation:ballready2 800ms;
+	animation-fill-mode : forwards;
+}
+._line3{
+	animation:ballready3 800ms;
+	animation-fill-mode : forwards;
+}
+._line4{
+	animation:ballready4 800ms;
+	animation-fill-mode : forwards;  
+}
+._line5{
+	animation:ballready5 800ms;
+	animation-fill-mode : forwards;  
+}
+/*鐏拌壊婊ら暅*/
+.gray { 
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    
+    filter: grayscale(100%);
+	
+    filter: gray;
+}
+/*鏈繘鐞冨垎涓ゆ 纰板埌闂ㄥ皢鍚庡弽寮�*/
+/*left2*/
+@keyframes ballready1_nogoal
+{
+    0%   {top: 76vh;margin-left: -3vw;}
+    40%  {top: 27vh;margin-left: -34vw;}
+    100% {top: 32vh;margin-left: -39vw;}
+}
+._line1_nogoal{
+	animation:ballready1_nogoal 1s;
+	animation-fill-mode : forwards;
+}
+
+/*left1*/
+@keyframes ballready2_nogoal
+{
+    0%   {top: 76vh;margin-left: -3vw;}
+    40% {top: 27vh;margin-left: -22vw;}
+    100% {top: 32vh;margin-left: -25vw;}
+}
+._line2_nogoal{
+	animation:ballready2_nogoal 1s;
+	animation-fill-mode : forwards;
+}
+/*mid*/
+@keyframes ballready3_nogoal
+{
+    0%   {top: 76vh;}
+    40% {top: 27vh;}
+    100% {top: 32vh;}
+}
+._line3_nogoal{
+	animation:ballready3_nogoal 1s;
+	animation-fill-mode : forwards;
+}
+/*right1*/
+@keyframes ballready4_nogoal
+{
+    0%   {top: 76vh;margin-left: -3vw;}
+    40% {top: 27vh;margin-left: 15vw;}
+    100% {top: 32vh;margin-left: 18vw;}
+}
+._line4_nogoal{
+	animation:ballready4_nogoal 1s;
+	animation-fill-mode : forwards;
+}
+/*right2*/
+@keyframes ballready5_nogoal
+{
+    0%   {top: 76vh;margin-left: -3vw;}
+    40% {top: 27vh;margin-left: 31vw;}
+    100% {top: 32vh;margin-left: 36vw;}
+}
+._line5_nogoal{
+	animation:ballready5_nogoal 1s;
+	animation-fill-mode : forwards;
+}
