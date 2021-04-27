@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>切换图片</title>
+    <script type="text/javascript">
+        window.onload=function (){
+            var i=1;
+            var img001 = document.getElementById("img001");
+            var btn001 = document.getElementById("btn001");
+            btn001.onclick=function (){
+                if (i==1){
+                    alert("已经是第一张了！请点击下一张")
+                }else{
+                i--;
+                img001.src="imgs/pic"+i+".png";
+                }
+            }
+            var btn002 = document.getElementById("btn002");
+            btn002.onclick=function (){
+                if (i==8){
+                    alert("已经是最后一张了！请点击上一张")
+                }else{
+                i++;
+                img001.src="imgs/pic"+i+".png";
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<table>
+    <tr>
+        <td>
+            <img src="imgs/pic1.png" id="img001"/>
+        </td>
+    </tr>
+    <tr>
+        <td><button id="btn001">上一张</button></td>
+        <td><button id="btn002">下一张</button></td>
+    </tr>
+</table>
+
+
+</body>
+</html>

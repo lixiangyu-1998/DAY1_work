@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算机</title>
+</head>
+<body>
+<table align="center" border="1">
+    <tr>
+        <td colspan="4"><input  id="text" type="text" value="0"  /></td>
+    </tr>
+    <tr>
+        <td><button class="btn">7</button></td>
+        <td><button class="btn">8</button></td>
+        <td><button class="btn">9</button></td>
+        <td><button class="btn">+</button></td>
+    </tr>
+    <tr>
+        <td><button class="btn">4</button></td>
+        <td><button class="btn">5</button></td>
+        <td><button class="btn">6</button></td>
+        <td><button class="btn">-</button></td>
+    </tr>
+    <tr>
+        <td><button class="btn">1</button></td>
+        <td><button class="btn">2</button></td>
+        <td><button class="btn">3</button></td>
+        <td><button class="btn">*</button></td>
+    </tr>
+    <tr>
+        <td colspan="2"><button class="btn">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td>
+        <td><button class="btn">=</button></td>
+        <td><button class="btn">/</button></td>
+    </tr>
+</table>
+
+<script>
+
+    var btns =document.getElementsByClassName ("btn");
+    var result = document.getElementById("text");
+    var res=[];
+    var sign=false;
+    for(var i=0;i<btns.length;i++){
+        btns [i].onclick=inputFun;
+        function inputFun(){
+            //是数字
+            if (!isNaN(this.innerHTML)){
+                sign=true;
+                //文本框不是0
+                if (result.value!=="0"){
+                    result.value+=this.innerHTML;
+                }//文本框值是0
+                else{
+                    result.value=this.innerHTML;
+                }
+            }//不是数字
+            else{
+                switch(this.innerHTML){
+                    case "+" :save(this);
+                        break;
+                    case "-" :save(this);
+                        break;
+                    case "/" :save(this);
+                        break;
+                    case "*":save(this);
+                        break;
+                    case "=":
+                        res.push(result.value);
+                        var result1 = eval(res.join(""));
+                        result.value=result1==Infinity?"xxx":result1;
+                        console.log(res.join(""))
+                        res=[];
+                        break
+                }
+            }
+        }
+
+    }
+    function save(mini){
+        if(!sign){
+            res[res.length-1]=mini.innerHTML;
+        }else{
+            res.push(result.value);
+            res.push(mini.innerHTML);
+        }
+        result.value="0";
+        sign=false;
+    }
+
+
+</script>
+
+</body>
+</html>

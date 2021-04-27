@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>校验用户输入</title>
+    <script type="text/javascript">
+        window.onload=function (){
+            var id001 = document.getElementById("id001");
+            id001.onclick=function(){
+                var userinput = document.getElementById("userinput");
+                var userinputText = userinput.value;
+                var patt=/^\w{5,12}$/;
+                if(patt.test(userinputText)){
+                    alert("输入合法");
+                }else{
+                    alert("输入不合法");
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <table align="center">
+        <tr>
+            <td colspan="3">只有由字母，数字。下划线组成,并且长度是 5 到 12 位的才能通过</td>
+        </tr>
+        <tr>
+            <td>
+                    请输入：
+            </td>
+            <td>
+                <input type="text" id="userinput">
+            </td>
+            <td>
+                <button ID="id001">校验输入</button>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
