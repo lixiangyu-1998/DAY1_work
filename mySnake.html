@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.mainpanel{
+				border: 1px solid black;
+				height: 400px;
+				width: 800px;
+				margin: 0px auto;
+				font-size: 1px;
+			}
+			.innerbg{
+				height: 18px;
+				width: 18px;
+				margin: 1px;
+				background-color: lightgray;
+				float: left;
+			}
+			.snake{
+				background-color: goldenrod;
+			}
+			.food{
+				background-color: lightgreen;
+			}
+			
+			p{
+				text-align: center;
+			}
+			
+		</style>
+		<script type="text/javascript" src="js/jquery-3.4.1.min.js" ></script>
+		<script>
+			//蛇横纵坐标
+			var snakeX =[4,5,6,7];
+			var snakeY =[4,4,4,4];
+			
+			var snakeXHead = 7;
+			var snakeYHead = 4;
+			
+			var foodX;
+			var foodY;
+			
+			/* 
+			37左
+			38上
+			39右
+			40下
+			 */
+			var direction = 39;
+			
+			
+			var cankeydown = true;
+			var gameTask;
+			var gameGrade = 200;
+			
+			//基础数组
+			var basearr = new Array(40);
+			for(var i = 0;i<40;i++){
+				basearr[i] = new Array(20);
+			}
+			
+			$(function(){
+				
+				
+				console.log(basearr);
+				
+				for(var y = 0;y<20;y++){
+					for(var x = 0;x<40;x++){
+						var mycontent = $('<div class = "innerbg"></div>');
+						basearr[x][y] = mycontent;
+						$("#mainpanel").append(basearr[x][y]);
+					}
+				}
+				drawSnake();
+				
+				
+				$("#testBtn").click(function(){
+					 snakeMove();
+				})
+				
+				$("#startBtn").click(function(){
+					$(this).prop("disabled",true);
+					initGame();
+					gameTask = setInterval("snakeMove()",gameGrade);
+					createFood();
+				})
+				
+				
+				
+				
+				
+				$(document).keyup(function(event){			
+					
+					
+					console.log(Math.abs(direction-event.keyCode)!=2);
+					if(cankeydown&&event.keyCode<=40&&event.keyCode>=37&&Math.abs(direction-event.keyCode)!=2){
+						direction = event.keyCode;
+						cankeydown = false;
+					}
+				})
+				
+				
+			})
+			
+			function initGame(){
+				$("#mainpanel").html("");
+				//重置坐标面板
+				for(var y = 0;y<20;y++){
+					for(var x = 0;x<40;x++){
+						var mycontent = $('<div class = "innerbg"></div>');
+						basearr[x][y] = mycontent;
+						$("#mainpanel").append(basearr[x][y]);
+					}
+				}
+				snakeX =[4,5,6,7];
+				snakeY =[4,4,4,4];
+				
+				drawSnake();
+				snakeXHead = 7;
+				snakeYHead = 4;
+
+				direction = 39;
+				
+				
+				cankeydown = true;
+				gameGrade = 200;
+				
+				
+				
+			}
+			
+			
+			function createFood(){
+				var isloop;
+				do{
+					isloop = false;
+					foodX = parseInt(Math.random()*40);
+					foodY = parseInt(Math.random()*20);
+					//判断不要出现在蛇身上
+					for(var i = 0; i<snakeX.length;i++){
+						if(snakeX[i]==foodX&&snakeY[i]==foodY){
+							console.log("重复了");
+							isloop = true;
+						}
+					}
+				}while(isloop)
+			
+				
+				basearr[foodX][foodY].addClass("food");
+			}
+			
+			function eatFood(){
+				//蛇头坐标与食物坐标重合 表示吃了
+				//如果吃到  不变短 如果没吃到 正常变短
+				if(snakeXHead==foodX&&snakeYHead==foodY){
+					basearr[foodX][foodY].removeClass("food");
+					//越吃越快
+					clearInterval(gameTask);
+					gameGrade-=20;
+					gameTask = setInterval("snakeMove()",gameGrade);
+					
+					createFood();
+				}else{
+					snakeX.shift();
+					snakeY.shift();
+				}
+				
+			}
+			
+			function snakeDie(){
+				for(var i = 0; i<snakeX.length-1;i++){
+					if(snakeX[i]==snakeXHead&&snakeY[i]==snakeYHead){
+						gameOver("吃到自己");
+					}
+				}
+				
+				if(snakeXHead<0||snakeXHead>39||snakeYHead<0||snakeYHead>19){
+					gameOver("撞墙");
+				}
+				
+			}
+			
+			function gameOver(mymsg){
+				clearInterval(gameTask);
+				alert(mymsg+" 游戏结束");
+				$("#startBtn").prop("disabled",false);
+				
+			}
+			
+			
+			function clearSnake(){
+				for(var i = 0; i<snakeX.length;i++){
+					basearr[snakeX[i]][snakeY[i]].removeClass("snake");
+				}
+				
+			}
+			
+			function drawSnake(){
+				for(var i = 0; i<snakeX.length;i++){
+					if(snakeX[i]>=0&&snakeX[i]<=39&&snakeY[i]>=0&&snakeY[i]<=19){
+						basearr[snakeX[i]][snakeY[i]].addClass("snake");
+					}
+				}
+			}
+			
+			function snakeMove(){
+				clearSnake();
+				
+				//方向向右
+				//x轴加1 y轴不变
+				if(direction==39){
+					snakeX.push(++snakeXHead);
+					snakeY.push(snakeYHead);
+					
+				}else if(direction==37){
+					snakeX.push(--snakeXHead);
+					snakeY.push(snakeYHead);
+					
+				}else if(direction==38){
+					snakeX.push(snakeXHead);
+					snakeY.push(--snakeYHead);
+					
+				}else if(direction==40){
+					snakeX.push(snakeXHead);
+					snakeY.push(++snakeYHead);
+					
+				}
+				
+				
+				
+				
+				
+				eatFood();
+				snakeDie();
+				drawSnake();
+				
+				cankeydown = true;
+			}
+			
+			
+			/* 
+			1.页面中的块 --- 坐标---点阵
+			使用二维数组表示
+			
+			2.以数组方式表示蛇
+			3.蛇头根据方向移动 
+			
+			4.对应方向 可以通过键盘输入改变
+			
+			
+			
+			
+			后续任务
+			 1.自动移动
+			 2.生成食物
+			   在坐标轴中 不能在蛇上
+			 3.蛇吃食物
+			   蛇头吃食物 边长
+			 4.死掉
+			   撞墙死  吃到自己
+			 5.越吃越快
+			 
+			 
+			 
+			 */
+			
+			
+		</script>
+	</head>
+	<body>
+		<div id="mainpanel" class="mainpanel">
+		</div>
+		<p>
+			<!-- 选择级别：<input id="grade1" name="gender" value="300" type="radio" /><label for="grade1">初级</label>
+			<input id="grade2" name="gender" value="200" type="radio" checked="checked"/><label for="grade2">中级</label>
+			<input id="grade3" name="gender" value="100" type="radio" /><label for="grade3">高级</label><br /> -->
+			<input id="startBtn" type="button" value="开始"/>
+		   <input id="testBtn" type="button" value="测试"/></p>
+	</body>
+</html>
