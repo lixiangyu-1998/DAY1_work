@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>贪吃蛇游戏</title>
+    <script src="jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //存放蛇
+            var arrySnake = [];
+            //存放路
+            var arryRoad = [];
+
+            var $map = $("#map");
+
+            //创建地图方法 参数是 地图块数大小 墙样式 路样式
+            function build(number, wallStyle, roadStyle) {
+                for (var i = 1; i <= number * number; i++) {
+                    //找出第一行和最后一行 这些是墙
+                    if (i <= number - 1 || i >= number * (number - 1)) {
+                        //给墙加wall的类 也就有了墙的样式  然后加入到大地图中 成为大地图的一部分
+                        $("<div class='" + wallStyle + "'>" + i + "</div>").appendTo($map);
+                        //找出第一列和最后一列 他们也是墙
+                    } else if (i % number === 1 || i % number === 0) {
+                        $("<div class='" + wallStyle + "'>" + i + "</div>").appendTo($map);
+                        //剩下的是路
+                    } else {
+                        $("<div class='" + roadStyle + "'>" + i + "</div>").appendTo($map);
+                        //可用的路放入路数组
+                        arryRoad.push(i - 1);
+                    }
+                }
+            }
+
+            //调方法造地图
+            build(20, "wall", "road");
+            //初始位置及长度
+            arrySnake = [21];
+            var snake = {};
+            //初始方向
+            snake.direction = "right";
+            //计时器
+            var task = null;
+            var score=0;
+            var speed=200;
+
+            function move(direction) {
+                var num = 0
+                var nextRoadIndex;
+                switch (direction) {
+                    //之前把地图实际上变成了一维数组 蛇的移动加减索引就好 也不算是索引 是每个格子的编号
+                    case "up":
+                        num = -20;
+                        break;
+                    case "down":
+                        num = 20;
+                        break;
+                    case "left":
+                        num = -1;
+                        break;
+                    case "right":
+                        num = 1;
+                        break;
+                }
+                //蛇下一步的位置 是map中的编号
+                var nextRoad = parseInt(arrySnake[0]) + num;
+                //拿下一步位置的方块类型
+                var className = $map.children().eq(nextRoad).attr("class").toString();
+                //类型是墙或者自身都会死亡 结束游戏
+                if (className === "wall") {
+                    alert("撞到墙了 最终分数是："+score);
+                    clearInterval(task);
+                    //死了直接刷新页面 省得出错
+                    window.location.reload();
+                } else if (className === "snake"){
+                    alert("撞到自己了 最终分数是："+score);
+                    clearInterval(task);
+                    window.location.reload();
+                }else if (className === "food") {
+                    score+=10
+                    $("#score").html(score) ;
+                    clearInterval(task);
+                    speed-=10;
+                    task = setInterval(function () {
+                        move(snake.direction);
+                    }, speed);
+                    //如果下一步是食物 把食物类变成蛇类  且把它加入蛇数组
+                    $map.children().eq(nextRoad).removeClass();
+                    $map.children().eq(nextRoad).addClass("sanke");
+                    arrySnake.unshift(nextRoad);
+                    //取其在路数组中的索引 把它从中踢出
+                    nextRoadIndex = arryRoad.indexOf(nextRoad);
+                    arryRoad.splice(nextRoadIndex, 1);
+                    food();
+
+                }
+                //下一格子不是墙 食物 自身 的话就正常走
+                // 蛇数组的最后一个元素实际上是蛇头 主要移动的思路就是 把下一步的路类变为蛇类 把尾巴的蛇类变为路类
+                //同时相应的把路类从路数组踢出 放入蛇数组  把蛇类从蛇数组踢出 放入路数组
+                var firstArrySnake = arrySnake[arrySnake.length - 1];
+                $map.children().eq(nextRoad).removeClass();
+                $map.children().eq(nextRoad).addClass('snake');
+                arrySnake.unshift(nextRoad);
+                nextRoadIndex = arryRoad.indexOf(nextRoad);
+                arryRoad.splice(nextRoadIndex, 1);
+
+                $map.children().eq(firstArrySnake).removeClass();
+                $map.children().eq(firstArrySnake).addClass('road');
+                arrySnake.splice(arrySnake.length - 1, 1);
+                arryRoad.push(firstArrySnake);
+
+
+            }
+
+            //38 40 37 39 键值码 上下左右
+            $(window).keydown(function (event) {
+                switch (event.keyCode) {
+                    //当前方向不是上才可以向下
+                    case 38:
+                        if (snake.direction !== "donw") {
+                            snake.direction = "up";
+                        }
+                        break;
+                    case 40:
+                        if (snake.direction !== "up") {
+                            snake.direction = "down";
+                        }
+                        break;
+                    case 37:
+                        if (snake.direction !== "right") {
+                            snake.direction = "left";
+                        }
+                        break;
+                    case 39:
+                        if (snake.direction !== "left") {
+                            snake.direction = "right";
+                        }
+                        break;
+                }
+
+            })
+
+            function autoMove() {
+                //200毫秒动一次 默认方向direction 可以在上面设置
+                task = setInterval(function () {
+                move(snake.direction);
+                }, speed)
+            }
+
+            function food() {
+                //取随机数 范围是 1到路数组的长度 保证食物位置正常
+                var number = parseInt(Math.random() * arryRoad.length);
+                var mapIndex = arryRoad[number];
+                $map.children().eq(mapIndex).removeClass("road");
+                $map.children().eq(mapIndex).addClass("food");
+            }
+
+
+            $("#btn001").click(function () {
+                //初始位置及长度
+                arrySnake = [21];
+                var snake = {};
+                //初始方向
+                snake.direction = "right";
+                for (var i = 0; i < arrySnake.length; i++) {
+                    $map.children().eq(arrySnake[i]).removeClass("road");
+                    $map.children().eq(arrySnake[i]).addClass("snake");
+                }
+                arryRoad.splice(0, arrySnake.length + 1)
+                food();
+                autoMove();
+                $("#btn001").attr("disabled",true);
+            })
+
+        })
+    </script>
+    <style>
+        div {
+            width: 28px;
+            height: 28px;
+            float: left;
+            border: 1px solid lightgrey;
+        }
+
+        .wall {
+            background-color: lightcoral;
+        }
+
+        .road {
+            background-color: lightcyan;
+        }
+
+        .snake {
+            background-color: lightskyblue;
+        }
+
+        .food {
+            background-color: pink;
+        }
+
+        #btn001 {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<!--地图 背景-->
+<div id="map" style="width: 600px;height: 600px;background: lightcoral"></div>
+<input type="button" value="开始游戏" id="btn001">
+<br/>
+<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分数:</span><span id="score">0</span>
+</body>
+</html>
