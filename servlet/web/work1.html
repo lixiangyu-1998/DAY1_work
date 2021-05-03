@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<form action="http://localhost:8080/servlet/servletWork" method="get">
+    <h1 align="center"><font color="red">填写注册资料</font>(以下**为必填项)</h1>
+    <table align="center">
+        <tr>
+            <td align="right">姓名：</td>
+            <td><label>
+                <input type="text" name="username"/>
+            </label>**</td>
+        </tr>
+        <tr>
+            <td align="right">年龄：</td>
+            <td><label>
+                <input type="text" name="age"/>
+            </label>**</td>
+        </tr>
+        <tr>
+            <td align="right">籍贯:&nbsp;&nbsp;&nbsp;</td>
+            <td><label>
+                <select name="area1">
+                    <option>河北</option>
+                    <option>河南</option>
+                </select>
+                省/直辖市
+            </label>
+                <label>
+                    <select name="area2">
+                        <option>承德</option>
+                        <option>沧州</option>
+                    </select>
+                    市
+                </label>
+                **
+            </td>
+        </tr>
+        <tr>
+            <td align="right">地址：</td>
+            <td><label>
+                <input type="text" name="address"/>
+            </label>**</td>
+        </tr>
+        <tr>
+            <td align="right">性别：</td>
+            <td>
+                <label>
+                    <input type="radio" name="sex" value="man"/>
+                    男
+                </label>
+                <label>
+                    <input type="radio" name="sex" value="woman"/>
+                    女
+                </label>
+                **
+            </td>
+        </tr>
+        <tr>
+            <td align="right">个人介绍：</td>
+            <td><label>
+                <textarea rows="10" cols="30" name="textarea01"></textarea>
+            </label>**</td>
+        </tr>
+        <tr>
+            <td align="right">备注：</td>
+            <td><label>
+                <textarea rows="10" cols="30" name="textarea02"></textarea>
+            </label>**</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="提交">
+                <input type="button" value="重置" id="btn001">
+            </td>
+        </tr>
+    </table>
+</form>
+<script>
+    var element = document.getElementById("btn001");
+    element.onclick=function (){
+        window.location.reload();
+    }
+</script>
+
+</body>
+</html>

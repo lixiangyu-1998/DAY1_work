@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+<!--    servlet标签给Tomcat配置servlet程序-->
+    <servlet>
+        <!--        给servlet程序起别名 一般是类名-->
+        <servlet-name>ServletWork</servlet-name>
+        <!--        是全类姓名-->
+        <servlet-class>com.lixiangyu.servlet.ServletWork</servlet-class>
+    </servlet>
+
+<!--    servlet mapping 标签给servlet程序配置访问地址-->
+    <servlet-mapping>
+<!--        告诉服务器 我当前配置的地址给哪个Servlet程序使用-->
+        <servlet-name>ServletWork</servlet-name>
+<!--        配置访问地址
+             / 在服务器解析的时候 表示 http://ip:port/工程路径
+                  /test  也就是定位到http://ip:port/工程路径/test-->
+        <url-pattern>/servletWork</url-pattern>
+    </servlet-mapping>
+
+
+</web-app>
