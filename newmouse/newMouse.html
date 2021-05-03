@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>打地鼠</title>
+    <script src="jquery-3.4.1.min.js"></script>
+    <script>
+        $(function () {
+            var $map = $("#map");
+            var number;
+            var score = 0;
+            var task1 = null;
+            var task2 = null;
+            var speed1 = 2000;
+            var speed2 = 1000;
+            var sec = 0;
+            var millisecond = 0;
+
+            function start() {
+                //造背景 每一块div都有编号了
+                for (var i = 1; i <= 25; i++) {
+                    $("<div class='" + "normal" + "'>" + i + "</div>").appendTo($map);
+                }
+            }
+
+            start();
+
+            function mouseOut() {
+                //随机出老鼠 换类型就好了
+                number = parseInt(Math.random() * 25);
+                $map.children().eq(number).removeClass();
+                $map.children().eq(number).addClass("mouseOut");
+                //老鼠图消失
+                task2 = setTimeout(function () {
+                    $map.children().eq(number).removeClass();
+                    $map.children().eq(number).addClass("normal");
+                    //解绑单击事件 图没了 也不能点击了
+                    $map.children().eq(number).unbind();
+                }, speed2);
+                //每次要给出老鼠图的那块div绑定单击事件
+                tapMouse(number);
+                return number;
+            }
+
+            function tapMouse(number) {
+                //老鼠图被单击 换老鼠挨打图 加分
+                $map.children().eq(number).click(function () {
+                    $map.children().eq(number).removeClass();
+                    $map.children().eq(number).addClass("tapMouse");
+                    //被打了马上解绑单击事件 防止重复加分
+                    $map.children().eq(number).unbind();
+                    score += 10
+                    $("#score").html(score);
+                    //点击后 老鼠图出现的速度 增加
+                    clearInterval(task1);
+                    speed1 -= 50;
+                    task1 = setInterval(function () {
+                        number = mouseOut();
+                    }, speed1);
+                    //老鼠图消失的速度 增加
+                    clearTimeout(task2);
+                    speed2 -= 50;
+                    task2 = setTimeout(function () {
+                        $map.children().eq(number).removeClass();
+                        $map.children().eq(number).addClass("normal");
+                        $map.children().eq(number).unbind();
+                    }, speed2);
+                    //延时一点时间好让挨打图能被看清 然后 换回原来的草地图
+                    setTimeout(function () {
+                        $map.children().eq(number).removeClass();
+                        $map.children().eq(number).addClass("normal");
+                    }, 400)
+                })
+                //分数够了就显示通关
+                if (score === 200) {
+                    alert("恭喜通关！")
+                    clearInterval(task1);
+                    clearTimeout(task2);
+                    window.location.reload();
+                }
+            }
+            //开始游戏按钮
+            $("#btn001").click(function () {
+                task1 = setInterval(function () {
+                    number = mouseOut();
+                }, speed1);
+                //计时 秒
+                setInterval(function () {
+                    sec += 1;
+                    $("#time").html(sec);
+                    if (sec === 30) {
+                        alert("很遗憾 时间到了 你的最终得分是：" + score);
+                        clearInterval(task1);
+                        clearTimeout(task2);
+                        window.location.reload();
+                    }
+                }, 1000)
+                //计时 毫秒
+                setInterval(function () {
+                    millisecond += 1;
+                    if (millisecond === 100) {
+                        millisecond = 0;
+                    }
+                    $("#time1").html(millisecond);
+                }, 10)
+            })
+        })
+    </script>
+    <style>
+        #map {
+            width: 350px;
+            height: 330px;
+            background-color: lightgrey;
+            margin-left: 750px;
+        }
+
+        #btn001 {
+            position: relative;
+            margin-top: 20px;
+            margin-left: 920px;
+        }
+
+        div {
+            width: 68px;
+            height: 64px;
+            float: left;
+            border: 1px solid lightgrey;
+        }
+
+        .normal {
+            background: url("img/00.jpg");
+            color: #C3DB47;
+        }
+
+        .mouseOut {
+            background: url("img/01.jpg");
+        }
+
+        .tapMouse {
+            background: url("img/02.jpg");
+        }
+
+        span {
+            position: relative;
+            top: 10px;
+            left: 870px;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<input type="button" value="开始" id="btn001">
+<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分数:</span><span id="score">0</span>
+<span>时间:</span><span id="time">0</span><span>秒</span><span id="time1">0</span><span>毫秒</span>
+</body>
+</html>
