@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script type="text/javascript" src="js/jquery-3.4.1.min.js" ></script>
+		<style>
+			.mainpanel{
+				border: 1px solid black;
+				width: 500px;
+				height: 500px;
+				margin: 0px auto;
+			}
+			
+			.sourcepanel{
+				border: 1px solid black;
+				width: 300px;
+				height: 100px;
+				margin: 50px auto;
+				text-align: center;
+			}
+			.sourcepanel span{
+				color: red;
+			}
+			
+			.mainpanel div{
+				border: 1px solid black;
+			    width: 78px;
+			    height: 78px;
+			    float: left;
+			    margin: 10px;
+			    background: url(img/00.jpg);
+			}
+			
+			 .mainpanel div img{
+				display: none;
+			} 
+			
+			.gameoverDiv{
+				width: 200px;
+				height: 100px;
+				border: 5px solid darkgray;
+				background-color: #D3D3D3;
+				border-radius: 10px;
+				position: absolute;
+				top: 30%;
+				left: 50%;
+				margin-left: -100px;
+				display: none;
+				text-align: center;
+				line-height: 100px;
+			}
+			
+		</style>
+		<script>
+			/* 
+			 1.点击开始按钮                   ok
+			   |--  计时任务
+			   |--  地鼠出现任务
+			   
+			 2.计时任务                       ok
+			   减少触发间隔 数字变化更频繁
+			   .toFixed(2) 字符
+			   
+			 3.地鼠出现任务							ok
+			   独立显示和隐藏  
+			   从多个图片中 随机选出一个 显示和隐藏
+			   
+			 4.地鼠点击								ok
+			   地鼠可以点击  
+			   不能重复加分(用户是否点过)
+			 
+			 5.到时间限制 60秒
+			   打够20只
+			   点结束按钮
+			 
+			 
+			 */
+			
+			var timetask ;
+			var mousetask;
+			$(function(){
+				
+				for(var i = 0;i<25;i++){
+					var myinner = '<div><img id="img'+i+'" src="img/01.jpg"/></div>';
+					$("#mainpanel").append(myinner);
+				}
+				
+				$("#mainpanel>div>img").click(function(){
+					console.log($(this).prop("src"));
+					//如果是第一张 加分 如果是第二张 不管
+					if($(this).prop("src").indexOf("img/01.jpg")>0){
+						//加分
+						var nowSource = parseInt($("#showSourcespan").html());
+						$("#showSourcespan").html(++nowSource);
+						
+						if(nowSource>=10){
+							myStop();
+						}
+						
+					}
+					
+					//改图片
+					$(this).prop("src","img/02.jpg");
+					
+				})
+				
+				
+				$("#startBtn").click(function(){
+					//重置游戏
+					myInit();
+					$(this).prop("disabled",true);
+					//计时任务
+					timetask = setInterval("timeCount()",10);
+					//出现地鼠任务
+					mousetask = setInterval(function(){
+						var myRandom = parseInt(Math.random()*25)
+						//console.log("img"+myRandom);
+						$("#img"+myRandom).prop("src","img/01.jpg");
+						$("#img"+myRandom).show();
+						setTimeout(function(){
+							$("#img"+myRandom).hide();
+						},1800)
+						
+					},800);
+					
+				})
+				
+				$("#stopBtn").click(function(){
+					myStop();
+				})
+				
+				
+			})
+			
+			function myInit(){
+				//重置计时记分
+				$("#showSourcespan").html(0);
+				$("#showTimespan").html(0);
+				
+				$("#gameoverDiv").hide();
+				
+			}
+			
+			
+			function timeCount(){
+			   var nowTime = parseFloat($("#showTimespan").html());
+			   //到时结束
+			   if(nowTime>=30){
+				   myStop();
+				   return;
+			   }
+			   nowTime=(nowTime+0.01).toFixed(2);
+			   $("#showTimespan").html(nowTime);
+			   
+			}
+			
+			
+			function myStop(){
+				clearInterval(timetask);
+				clearInterval(mousetask);
+				
+				$("#mainpanel>div>img").hide(500);
+				$("#gameoverDiv").show();
+				$("#startBtn").prop("disabled",false);
+			}
+			
+		</script>
+	</head>
+	<body>
+		<div id="gameoverDiv" class="gameoverDiv">
+			恭喜你 游戏结束!!!
+		</div>
+		<div id="mainpanel" class="mainpanel">
+			
+			
+		</div>
+		<div class="sourcepanel">
+			<p>
+				计时:<span id="showTimespan">0</span>秒<br />
+				计分:<span id="showSourcespan">0</span>分<br />
+				<input id="startBtn" type="button" value="开始" />
+				<input id="stopBtn" type="button" value="结束" />
+			</p>
+		</div>
+	</body>
+</html>
