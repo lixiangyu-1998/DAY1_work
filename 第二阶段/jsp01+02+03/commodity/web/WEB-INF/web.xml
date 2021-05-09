@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.lixiangyu.web.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/loginServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RegistServlet</servlet-name>
+        <servlet-class>com.lixiangyu.web.RegistServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegistServlet</servlet-name>
+        <url-pattern>/registServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CommodityServlet</servlet-name>
+        <servlet-class>com.lixiangyu.web.CommodityServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CommodityServlet</servlet-name>
+        <url-pattern>/commodityServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>OrderServlet</servlet-name>
+        <servlet-class>com.lixiangyu.web.OrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderServlet</servlet-name>
+        <url-pattern>/orderServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>OrderCheckServlet</servlet-name>
+        <servlet-class>com.lixiangyu.web.OrderCheckServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderCheckServlet</servlet-name>
+        <url-pattern>/orderCheckServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>OrderInfoCheck</servlet-name>
+        <servlet-class>com.lixiangyu.web.OrderInfoCheck</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderInfoCheck</servlet-name>
+        <url-pattern>/orderInfoCheck</url-pattern>
+    </servlet-mapping>
+
+</web-app>
