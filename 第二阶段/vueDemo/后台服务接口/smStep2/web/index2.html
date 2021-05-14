@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	
+		
+		<link href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/theme-chalk/index.css" rel="stylesheet">
+		<!-- <link rel="stylesheet" 123 href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+ -->		<style>
+			 .text {
+			    font-size: 14px;
+			  }
+			
+			  .item {
+			    margin-bottom: 18px;
+			  }
+			
+			  .clearfix:before,
+			  .clearfix:after {
+			    display: table;
+			    content: "";
+			  }
+			  .clearfix:after {
+			    clear: both
+			  }
+			
+			  .box-card {
+			    width: 480px;
+			  }
+			  .mydiv{
+				  margin: 200px auto;
+			  }
+
+		</style>
+	</head>
+	<body>
+		  <div id="base">
+		    <el-card class="box-card mydiv">
+		      <div slot="header" class="clearfix">
+		        <span>登录</span>
+		      </div>
+		      <el-form ref="form" :model="myform" label-width="80px">
+		        <el-form-item label="用户名">
+		          <el-input v-model="myform.username"></el-input>
+		        </el-form-item>
+				<el-form-item label="密码" prop="pass">
+				    <el-input type="password" v-model="myform.pwd" autocomplete="off"></el-input>
+				  </el-form-item>
+
+		        <el-form-item>
+		          <el-button type="primary" @click="onSubmit">登录</el-button>
+		          <el-button>取消</el-button>
+		        </el-form-item>
+		    </el-card>
+		</div>
+	</body>
+	
+	<!-- <script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script> -->
+	<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
+	<script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js"></script>
+	<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+	<script src="https://cdn.bootcdn.net/ajax/libs/qs/6.9.4/qs.min.js"></script>
+	<script>
+		var Main = {
+		        data() {
+		          return {
+		            myform: {
+		              username: '',
+		              pwd: ''
+		            },
+					returnRes:""
+		          }
+		        },
+		        methods: {
+		          onSubmit() {
+					  console.log(window.Qs.stringify(this.myform));
+		            axios.post('login', window.Qs.stringify(this.myform))
+					.then(response=>{
+						    console.log(response);
+							if(response.data.returnCode==10000){
+								location.href="main.html";
+							}else{
+								this.$message.error(response.data.returnMsg);
+							}
+					}).catch(function (error) {
+		                console.log(error);
+		            });
+		          }
+		        },
+				created(){
+					axios.defaults.withCredentials=true;
+					
+/* 				    axios.get('http://127.0.0.1:8080/login?key=你好', {
+				        firstName: 'Fred',
+				        lastName: 'Flintstone'
+				    }).then(function (response) {
+				        console.log(response);
+				    }).catch(function (error) {
+				        console.log(error);
+				    }); */
+				}
+		  }
+		  
+		  var Ctor = Vue.extend(Main)
+		  new Ctor().$mount('#base')
+		
+	</script>
+</html>

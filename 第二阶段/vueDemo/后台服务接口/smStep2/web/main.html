@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/qs/6.9.4/qs.min.js"></script>
+		<script src="js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<link href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/theme-chalk/index.css" rel="stylesheet">
+		<style>
+			/*1231231*/
+			/*23r23r23r*/
+			html,body{
+
+				height: 100%;
+				margin: 0px;
+			}
+			  .el-header, .el-footer {
+			    background-color: #B3C0D1;
+			    color: #333;
+			    text-align: center;
+			    line-height: 100px;
+			  }
+			  
+			  
+			  .el-aside {
+			    background-color: #D3DCE6;
+			    color: #333;
+			    text-align: left;
+			    line-height: 200px;
+			  }
+			  
+			  .el-main {
+			    background-color: #E9EEF3;
+			    color: #333;
+			    text-align: center;
+			    line-height: 160px;
+			  }
+			  .el-container:nth-child(5) .el-aside,
+			  .el-container:nth-child(6) .el-aside {
+			    line-height: 260px;
+			  }
+			  
+			  .el-container:nth-child(7) .el-aside {
+			    line-height: 320px;
+			  }
+			  #base{
+				  height: 100%;
+			  }
+			  .el-container{
+				  height: 100%;
+			  }
+				a{
+					text-decoration: none;
+					color: white;
+				}
+				.el-submenu{
+					text-align: center;
+				}
+		</style>
+	</head>
+	<body>
+		<div id="base">
+			<el-container>
+			  <el-header height="100px">xxxxx管理系統</el-header>
+			  <el-container>
+			    <el-aside width="200px">
+					<el-row class="tac">
+					  <el-col :span="24">
+					    <el-menu
+					      :default-active="openmenu"
+					      class="el-menu-vertical-demo"
+					      @open="handleOpen"
+					      @close="handleClose"
+					      background-color="#545c64"
+					      text-color="#fff"
+					      active-text-color="#ffd04b">
+					      <el-submenu :index="menu.menuid" v-for="(menu,indexo) in menus">
+					        <template slot="title">
+					          <i :class="menu.glyphicon"></i>
+					          <span>{{menu.menuname}}</span>
+					        </template>
+					        <el-menu-item-group v-for="(sub,index) in menu.submenu">
+					          <a :href="sub.menuurl"><el-menu-item :index="sub.menuid">{{sub.menuname}}</el-menu-item></a>
+					        </el-menu-item-group>
+					      </el-submenu>
+					    </el-menu>
+					  </el-col>
+					</el-row>
+					
+					
+				</el-aside>
+			    <el-main>
+					<div id="mymain">
+						欢迎回来！你的工作台xxx
+					</div>
+					
+					</el-main>
+			  </el-container>
+			</el-container>
+			
+		</div>
+
+	</body>
+	<script>
+		
+		
+		
+		var Main = {
+					data() {
+					  return {
+						openmenu:"12001",
+						menus:[{menuname:"用戶管理",menuid:"11",submenu:[{menuname:"用户表",menuid:"11001",menuurl:"user1.html"},{menuname:"权限管理",menuid:"11002"}]},
+								{menuname:"訂單管理",menuid:"12",submenu:[{menuname:"主订单",menuid:"12001",menuurl:"order1.html"},{menuname:"子订单",menuid:"12002"}]},
+						]
+					  }
+					},
+					methods: {
+						  handleOpen(key, keyPath) {
+							console.log(key, keyPath);
+						  },
+						  handleClose(key, keyPath) {
+							console.log(key, keyPath);
+						  }
+					},
+					created(){
+						axios.defaults.withCredentials=true;
+/*
+
+		axios.get('http://127.0.0.1:8080/test')
+						.then(response=>{
+							if(response.data.recode==20000){
+								location.href="index2.html";
+							}
+						}).catch(function (error) {
+							console.log(error);
+						}); */
+						axios.get('getmenu')
+						.then(response=>{
+							console.log(response);
+							if(response.data.returnCode==20000){
+								location.href="index2.html";
+							}
+							this.menus = response.data.returnData;
+						}).catch(function (error) {
+							console.log(error);
+						}); 
+
+					}
+				  }
+				  
+				  var Ctor = Vue.extend(Main)
+				  new Ctor().$mount('#base')
+		
+	</script>
+</html>
