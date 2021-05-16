@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <h1 id="h1001">{{msg}}</h1>
+    <input type="button" value="修改数据" @click="changeData">
+    <input type="text" v-model="msg">
+    <!--
+    axios请求 可以在 2 3 4 阶段发起 但最好在2 3阶段使用  避免 二次注入 二次渲染
+
+    vue生命周期的三个阶段
+    1.初始化阶段  1 2 3 4
+
+        beforeCreate(){1.第一个执行生的命周期函数，注意 ：在这个函数执行的时候vue实例仅仅完成内部事件
+        },
+        created(){2.第二个执行的生命周期函数， 注意：在这个函数执行的时候vue实例已经完成自定义 data methods
+        computed 等属性的初始化及语法校验
+        },
+        beforeMount(){3.第三个执行的生命周期函数 注意：在这个函数执行的时候vue实例仅仅只是将el属性指向的html编译vue
+            模版，此时并没有完成模版内容赋值
+            },
+        mounted(){4.第四个执行的生命周期函数 注意：在这个函数执行的时候vue实例会将data数据渲染到编译的模版中
+            //并形成虚拟dom，替换el指向的原始dom
+            }
+
+    2.运行阶段 5 6
+
+        beforeUpdate(){5.第五个执行的生命周期函数 注意：在这个函数执行的时候，vue实例中data数据发生改变，
+            但是页面中数据还是原始数据
+            },
+        updated(){6.第六个执行的生命周期函数 注意：在这个函数执行的时候，vue实例中data数据和页面中数据已经一致了
+          },
+
+    3.销毁阶段 7 8
+        beforeDestroy(){7.第七个执行的生命周期函数 注意：在这个函数执行的时候，vue实例仅仅是开始销毁 data methods ..
+            //所以 值 方法 等 还是能拿到的
+         },
+        destroyed(){8.第八个执行的生命周期函数 注意：在这个函数执行的时候，会销毁vue实例上的
+            // events child component listener监听机制 ..
+        }
+    -->
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            msg: "vue生命周期",
+        },
+        methods: {
+            aa: function () {
+                console.log("aa被调用了");
+            },
+            changeData: function () {
+                this.msg = "修改数据"
+            }
+        },
+        computed: {},
+        beforeCreate() {
+            //1.第一个执行生的命周期函数，注意 ：在这个函数执行的时候，vue实例仅仅完成内部事件
+            //和使用生命周期方法初始化
+            //此时是拿不到自定义的msg的
+            console.log("beforeCreate：" + this.msg);
+        },
+        created() {
+            //2.第二个执行的生命周期函数， 注意：在这个函数执行的时候，vue实例已经完成自定义 data methods
+            //computed 等属性的初始化及语法校验
+            //因为已经完成注入 此时msg可用了 方法也可以调用了
+            console.log("created：" + this.msg);
+            this.aa();
+        },
+        beforeMount() {
+            //3.第三个执行的生命周期函数 注意：在这个函数执行的时候，vue实例仅仅只是将el属性指向的html编译vue
+            //模版，此时并没有完成模版内容赋值
+            //所以 只打印出了 模版 {{msg}}  并没有赋值
+            console.log("beforeMount:" + document.getElementById("h1001").innerText);
+        },
+        mounted() {
+            //4.第四个执行的生命周期函数 注意：在这个函数执行的时候，vue实例会将data数据渲染到编译的模版中
+            //并形成虚拟dom，替换el指向的原始dom
+            //此时可以正常拿到msg的值
+            console.log("beforeMount:" + document.getElementById("h1001").innerText);
+        },
+
+        //初始化阶段完成 以下是运行阶段 数据改变时触发
+
+        beforeUpdate() {
+            //5.第五个执行的生命周期函数 注意：在这个函数执行的时候，vue实例中data数据发生改变，
+            // 但是页面中数据还是原始数据
+            //data已变
+            console.log("beforeUpdate:" + this.msg);
+            //页面数据没变
+            console.log("beforeMount:" + document.getElementById("h1001").innerText);
+        },
+        updated() {
+            //6.第六个执行的生命周期函数 注意：在这个函数执行的时候，vue实例中data数据和页面中数据已经一致了
+            //data数据和页面数据都变了
+            console.log("updated:" + this.msg);
+            console.log("beforeMount:" + document.getElementById("h1001").innerText);
+        },
+
+        //运行阶段完成 以下是销毁阶段  vue实例名.$destroy(); 后执行
+
+        beforeDestroy() {
+            //7.第七个执行的生命周期函数 注意：在这个函数执行的时候，vue实例仅仅是开始销毁 data methods ..
+            //所以 值 方法 等 还是能拿到的
+            console.log("beforeDestroy:" + this.msg);
+        },
+        destroyed() {
+            //8.第八个执行的生命周期函数 注意：在这个函数执行的时候，会销毁vue实例上的
+            // events child component listener监听机制 ..
+            console.log("destroyed:" + this.msg);
+        }
+    });
+</script>
+</body>
+</html>

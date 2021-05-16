@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+{{msg}}
+  <table border="1">
+    <tr>
+      <th>id</th>
+      <th>名称</th>
+      <th>价格</th>
+      <th>数量</th>
+      <th>小计</th>
+    </tr>
+    <tr v-for="(item,index) in items" :key="item.id">
+      <th>{{item.id}}</th>
+      <th>{{item.name}}</th>
+      <th>{{item.price}}</th>
+      <th><input type="button" value="-" @click="reduceItem(index)">
+        {{item.count}}<input @click="addItem(index)" type="button" value="+"></th>
+      <th>{{(item.price * item.count).toFixed(2)}}</th>
+    </tr>
+  </table>
+<!--  使用methods 方法 完成计算业务
+缺点：
+    只要调用了一次计算方法 整个计算方法就会执行一次  如果在一个页面中 多次使用计算结果
+    可能会造成重复计算 导致页面加载性能变低-->
+  <h3>总价格：{{getTotalPrice()}}</h3>
+  <h3>总价格：{{getTotalPrice()}}</h3>
+  <h3>总价格：{{getTotalPrice()}}</h3>
+  <h3>总价格：{{getTotalPrice()}}</h3>
+  <h3>总价格：{{getTotalPrice()}}</h3>
+  <h3>总价格：{{getTotalPrice()}}</h3>
+
+</div>
+<script src="js/vue.js"></script>
+<script>
+<!--   vue 确实比jq js 好用太多-->
+  var app = new Vue({
+    el:"#app",
+    data:{
+      msg:"购物车",
+      items:[
+              {id:1,name:"xxx1",count:1,price:210},
+              {id:2,name:"xxx2",count:1,price:420},
+              {id:3,name:"xxx3",count:1,price:520},
+              {id:4,name:"xxx4",count:1,price:720},
+      ]
+    },
+    methods:{
+      addItem:function (index){
+
+        console.log(index);
+        console.log(this.items[index].count);
+        this.items[index].count++;
+      },
+      reduceItem:function (index){
+        if (this.items[index].count<1){
+          return;
+        }
+        this.items[index].count--;
+      },
+      getTotalPrice:function (){
+        var totalPrice=0;
+        for (var i=0;i<this.items.length;i++){
+          totalPrice +=this.items[i].price*this.items[i].count;
+        }
+        console.log(totalPrice)
+        return totalPrice.toFixed(2);
+      }
+    }
+  });
+
+</script>
+</body>
+</html>

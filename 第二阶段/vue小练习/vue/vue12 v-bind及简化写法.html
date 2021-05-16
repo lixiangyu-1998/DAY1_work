@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <h2>{{msg}}</h2>
+    <!--v-bind 绑定  用来将html中的相关属性 绑定到 vue实例中 通过对实例中数据的改变 影响到对应标签中属性值的变化
+            v-bind:属性
+            本例中 将src width height 属性交给 vue来管理 无需写死 src的值
+            v-bind:属性 简化写法   :属性名
+    -->
+    <img :src="imgSrc" :width="width" :height="height" alt="xxx">
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            msg: "hello vue",
+            game: "今天打CSGO",
+            //imgSrc:"20210430181734.png",
+            imgSrc:"20210430181744.png",
+            width:512,
+            height:384
+
+        },
+        methods: {}
+
+    });
+
+</script>
+</body>
+</html>

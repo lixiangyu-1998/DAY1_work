@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <h2>{{msg}}</h2>
+    <!--    v-if v-show 作用 都是用来控制 页面中标签是否展示和隐藏 true展示  false隐藏-->
+    <!--    区别 v-show 在控制页面标签是否展示时 底层使用的是 css中 display 属性
+    数据量大时 或 控制显示状态切换频繁时 推荐用
+            v-if 在控制页面标签是否展示时 底层是直接操作dom元素，通过对dom元素的删除和添加
+            来控制元素的展示和隐藏
+    -->
+    <h1 v-show="isShow">{{game}}</h1>
+    <img src="20210430181734.png" alt="tupian" v-show="isShow">
+    <input type="button" value="显示/隐藏" @click="show">
+    <input type="button" value="显示/隐藏的另一种方式" @click="isShow=!isShow">
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            msg: "hello vue",
+            game: "今天打CSGO",
+            isShow: true
+
+        },
+        methods: {
+            show:function (){
+                this.isShow=!this.isShow
+            }
+        }
+
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+<users></users>
+
+</div>
+
+</body>
+</html>
+<script src="js/vue.js"></script>
+<script src="js/axios.min.js"></script>
+<script>
+
+    //定义局部 用户列表组建配置对象
+    const users= {
+        template:"<div>" +
+            "<h3>用户列表-{{count}}-{{name}}</h3>" +
+            "<button @click='changeCount'>+</button>" +
+            "<ul>" +
+            "<li v-for='item in items'>" +
+            "</li>" +
+            "</ul>" +
+            "</div>",//用来定义组件html内容
+        data(){
+            //定义组件数据 注意 在组件中定义的数据 只能在当前组件中使用。
+            //组件中的数据不能像vue那样定义
+            //count:0,
+
+            //首先data要用函数的方式 data()  然后在return中 定义数据
+            return{
+                count:0,
+                name:"李翔宇",
+                //items:["xxx","ccc","zzz"],
+                items:[],
+            };
+        },
+        methods: {
+            //定义组件函数 注意范围 只能在组件内用
+            changeCount:function (){
+                this.count++;
+            },
+        },
+        computed: {
+            //定义组件计算属性 用来对页面中结果进行二次处理  注意范围 只能在组件内用
+            // 这里定义的是属性 虽然按方法的格式定义 但是调用的时候不要加括号
+
+        },
+        beforeCreate(){
+            //组件刚初始化 仅仅注册组件自己的事件 和生命周期函数，
+        },
+        created(){
+            //组件已经注入data methods computed 相关数据方法
+            axios.get("/xxx").then(res=>{
+                this.items=res.data;
+            })
+        },
+        beforeMount(){
+            //将template中指向html编译 vue模版 此时还没有完成模版中内容的渲染
+        },
+        mounted(){
+          //将template中html编译模版进行数据渲染 并且 将渲染完成的数据在内存中形成虚拟dom 替换template 指向dom
+        },
+        beforeUpdate(){
+          //组件中的data数据发生变化时 会触发beforeUpdate 此时页面中的数据还是原始数据
+        },
+        updated(){
+          //此时页面中的数据和data数据一致
+        },
+        beforeDestroy(){
+          //销毁vue实例之前触发方法
+        },
+        destroyed(){
+            //vue实例已经销毁 监听机制 全部消失
+        }
+
+    };
+    const app = new Vue({
+        el: "#app",
+        data: {},
+        methods: {},
+        computed: {},
+        components: {
+            //注册组件  等价于users:users 这种方式
+            users,
+        }
+    });
+</script>

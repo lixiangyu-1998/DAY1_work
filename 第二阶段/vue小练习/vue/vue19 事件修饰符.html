@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    {{msg}}
+    <!--    事件修饰符 作用  用来喝事件连用 用来 决定事件触发条件和决定事件触发机制
+    .stop    阻止事件冒泡
+    .prevent 阻止默认行为
+    .self    只触发自身行为
+    .once    只触发一次事件
+    注意：事件修饰符可以连续使用
+    -->
+    <!--    .stop 用来阻止事件冒泡
+    虽然只点击了 child 但是child下面是 parent 所以 既触发了child 单击事件 也触发了parent的单击事件 这就是事件冒泡
+    -->
+    <div style="width: 200px;height: 200px;background: #409EFF" @click="parent">
+        <!--    对child 中的单击事件进行事件修饰 不让其进行事件冒泡-->
+        <div style="width: 100px;height: 100px;background: #B3C0D1" @click.stop="child">
+        </div>
+    </div>
+    <!--    .prevent 阻止默认行为
+    在单击事件触发后 阻止了 a标签的默认跳转   -->
+    <a href="http://www.baidu.com" @click.prevent="search">百度一下</a>
+    <!--    .self    只触发自身行为
+    如果有多个child 那么一个个加.stop 固然可以 但是太麻烦  在parent 上 加.self 也可以避免事件冒泡
+    -->
+    <div style="width: 200px;height: 200px;background: #409EFF" @click.self="parent">
+        <div style="width: 100px;height: 100px;background: #B3C0D1" @click="child">
+        </div>
+        <div style="width: 100px;height: 100px;background: #D3DCE6" @click="child">
+        </div>
+    </div>
+<!--        .once    只触发一次事件
+ 顾名思义 不必多说 事件触发一次后失效
+-->
+    <input type="button" value="点我" @click.once="clickMe">
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            msg: "事件修饰符"
+        },
+        methods: {
+            parent: function () {
+                alert("parent");
+            },
+            child: function () {
+                alert("child");
+            },
+            search: function () {
+                alert("a的alert触发了")
+            },
+            clickMe:function (){
+                alert("1");
+            }
+        },
+        computed: {}
+    });
+</script>
+</body>
+</html>

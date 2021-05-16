@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <h2>{{msg}}</h2>
+    <img :src="imgSrc" :width="width" :height="height" alt="xxx" @mouseover="change1" @mouseout="change2">
+</div>"20210430181744.png"
+<script src="js/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            msg: "hello vue",
+            game: "今天打CSGO",
+            //imgSrc:"20210430181734.png",
+            imgSrc:"20210430181744.png",
+            width:512,
+            height:384
+        },
+        methods: {
+            change1:function (){
+                this.imgSrc="20210430181734.png"
+            },
+            change2:function (){
+                this.imgSrc="20210430181744.png"
+            }
+        }
+
+    });
+
+</script>
+</body>
+</html>

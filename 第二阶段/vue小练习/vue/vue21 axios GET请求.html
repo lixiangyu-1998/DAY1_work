@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <h1>
+        axios get
+    </h1>
+</div>
+
+<script src="js/axios.min.js"></script>
+<script>
+    //axios发送get请求
+    // axios.get("url?key=value&&key2=value2").then(成功时执行的函数).catch(失败时执行的函数)
+    // axios.get("http://localhost:8080/vue_back/testServlet?id=23").then(function (res) {
+    //     //后台传的是 json字符串 axios自动帮忙转成了对象
+    //     console.log(res.data);
+    //     console.log(res.data.id);
+    //     console.log(res.data.name);
+    //     console.log(res.data.age);
+    //     console.log(res.data.bir);
+    // });
+
+    //es6简化写法 function(){}  简化写法 （）=>{}
+    //async 它作为一个关键字放到函数前面 表示函数是一个异步函数 也就意味着该函数的执行不会阻塞后面代码的执行。
+    async function show() {
+        var data1;
+        //await等待异步操作执行完毕
+        await axios.get("http://localhost:8080/vue_back/testServlet?id=23").then(res => {
+            console.log(res.data);
+            // console.log(res.data.id);
+            // console.log(res.data.name);
+            // console.log(res.data.age);
+            // console.log(res.data.bir);
+            data1 = res.data;
+        });
+        return data1;
+    }
+    //异步方法返回值为promise对象，接收时需要通过.then(res=>{})接受，值存在res中
+    show().then(res => {
+        console.log(res);
+        console.log(res.id);
+        console.log(res.name);
+        console.log(res.age);
+        console.log(res.bir);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--{{msg}} //出了范围就取不到了-->
+<div id="div001">
+    {{ msg }}<br/>
+    <h2>{{msg}}</h2>
+    <span>{{msg}}</span>
+    <h3>用户名：{{username}}</h3>
+</div>
+
+<script src="js/vue.js"></script>
+<script>
+    var vue1 = new Vue({
+        //配置信息
+        el: "#div001",//element 元素  指定vue实例作用范围    在el指定作用范围内 可以直接使用{{属性名}}
+        //获取data中的属性
+        data: {
+            //data 数据 用来给vue实例对象绑定一系列数据
+            msg: "开始第一个vue练习",
+            username:"李翔宇",
+        }
+    });
+</script>
+</body>
+</html>

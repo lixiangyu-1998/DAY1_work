@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <h2>{{msg}}</h2>
+    <!--v-model 指令  用来绑定 form表单标签中的value属性  交给vue实例进行管理 input select
+    checkbox button.....
+       v-bind 用来绑定 html标签中的属性交给vue进行管理  这个要区分好
+       因为 v-bind 只绑定了value 属性 所以用的时候 无需像v-bind一样 v-bind：属性=""
+       只需要v-model="" 即可
+       所谓双向绑定 我们改变 v-model的值 那么 data中的 msg 也会改变
+       进而 上面h2标签中的msg也跟着改变了
+       那么如果我们对data中的msg 进行改变  相应的 v-model 的msg也会改变  h2的msg也会改变
+       所以称之为双向绑定
+       MVVM     model v-model view
+       model 就是 vue实例中的data数据 v-model 相当于监听器 view 就是页面中的数据
+       model改变了 值会通过v-model监听器 传给 view 页面
+       那么反过来 view 页面的值发生了改变 也会通过 v-model 监听器 来传递给 model
+       此为 双向 绑定
+       再说一遍
+       文本框的值发生变化 又因 v-model 已经绑定了data中的msg 所以改变的值会同步给data 的msg
+       data 的msg 一变化 页面中的 h2标签的msg也变化了 这一串变化就是 从 view 到model的变化
+       h2其实就是 data的体现 也就是model  输入框就是view  是页面的体现
+
+       -->
+    <input type="text" v-model="msg">
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            msg: "hello vue",
+        },
+        methods: {}
+    });
+</script>
+</body>
+</html>

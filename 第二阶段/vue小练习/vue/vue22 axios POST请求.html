@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <h1>
+        axios Post
+    </h1>
+</div>
+
+<script src="js/axios.min.js"></script>
+<script>
+    // axios({
+    //     method:'post',
+    //     url:'http://localhost:8080/vue_back/testServlet02',
+    //     data:{
+    //         name:"lixiangyu",
+    //         age:"23",
+    //         bir:"xxxx-xx-xx"
+    //     }
+    // }).then(res=>{
+    //      console.log(res.data());
+    //  });
+
+    // axios发送post请求 参数一 url地址 参数2 请求数据
+    axios.post("http://localhost:8080/vue_back/testServlet002",{
+        name:"lixiangyu",
+        age:"23",
+        bir:"xxxx-xx-xx"
+    }).then(res=>{
+        console.log(res.data);
+    })
+    // axios.get("http://localhost:8080/vue_back/testServlet02",{
+    //     name:"lixiangyu",
+    //     age:"23",
+    //     bir:"xxxx-xx-xx"
+    // }).then(res=>{
+    //     console.log(res.data());
+    // })
+</script>
+</body>
+</html>

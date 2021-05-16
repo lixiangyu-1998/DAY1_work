@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <h2>{{msg}}</h2>
+    <h2>{{user.name}}</h2>
+    <h2>{{user.info}}</h2>
+    <h2>{{school}}</h2>
+    <h2>{{school[0]}}-{{school[1]}}-{{school[2]}}</h2>
+    <h2>{{users[0].name}}</h2>
+
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el: "#app", //指定作用范围
+        data: {        //绑定数据
+            msg: "第二个例子",
+            user: {name: "lixiangyu", info: "越努力越幸运"},
+            school:["xxx","ccc","zzz"],
+            users:[{name: "lixiangyu1", info: "越努力越幸运"},
+                {name: "lixiangyu2", info: "越努力越幸运"},
+                {name: "lixiangyu3", info: "越努力越幸运"},
+                {name: "lixiangyu4", info: "越努力越幸运"}
+            ]
+
+
+        }
+    });
+
+</script>
+
+</body>
+</html>

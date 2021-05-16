@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+  {{age}}<br/>
+  <!--  简化绑定  v-on:==  @
+  @事件名="事件函数名(参数..)"-->
+  <input type="button" value="点我给年龄加10" @click="addAge(10)">
+  <input type="button" value="点我给年龄减10" @click="reduceAge(10)">
+
+</div>
+<script src="js/vue.js"></script>
+<script>
+  var vue = new Vue({
+    el:"#app",
+    data:{
+      msg:"hello lixiangyu",
+      age:23
+    },
+    methods:{
+      addAge:function (num){
+        //this就是当前vue实例对象
+        //本例子中  model 变 view 也变
+        //this.age=this.age+1
+        if (this.age>=120){
+          return;
+        }
+        this.age=this.age+num;
+      },
+      reduceAge:function (num){
+        if (this.age<2){
+          return;
+        }
+        this.age=this.age-num;
+      }
+    }
+  });
+</script>
+</body>
+</html>

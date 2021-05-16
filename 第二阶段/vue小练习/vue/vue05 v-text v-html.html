@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+  {{msg}}
+<!--  vue提供的两个指令 v-text v-html 都可以根据属性名获取data中数据渲染到指定标签内-->
+<!--  区别-->
+<!--  v-text 会覆盖标签原始内容覆盖-->
+<!--  v-text不会差值闪烁  而{{属性名}} 这种差值表达式 容易出现差值闪烁 即当网络条件不好时 将源代码展现在页面上-->
+  <h2 v-text="msg">xxxxx</h2>
+<!--  共同点 都可以根据属性名获取data中数据渲染到指定标签内-->
+<!--  v-text 以文本形式渲染到标签内部  相当于 innerText-->
+<!--  v-html 将获取数据中含有html标签解析之后渲染到标签内部 相当于 innerHtml-->
+<!--  也就是说 v-html 可以解析数据中的标签 而v-text 只会按文本将数据输出-->
+  <h2 v-text="content">xxxxx</h2>
+  <h2 v-html="content">xxxxx</h2>
+
+</div>
+
+<script src="js/vue.js"></script>
+<script>
+  var vue = new Vue({
+    el:"#app",
+    data:{
+      msg:"hello vue",
+      content:"点击进入<a href='http://www.baidu.com'>baidu</a>"
+
+    }
+
+  });
+</script>
+
+</body>
+</html>

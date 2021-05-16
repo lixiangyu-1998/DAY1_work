@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <h2>{{msg}}</h2>
+    <!--    js 事件三要素 -->
+    <!--    事件源 发生事件的源头  一般是html标签-->
+    <!--    事件   发生的特定动作   onclick单击  dblclick双击 onkeyup键盘抬起 ...-->
+    <!--    监听器  事件处理程序  事件处理函数 function(){}-->
+
+    <!--    vue事件 v-on：
+            在vue中给对应标签绑定事件 可以通过vue提供的v-on指令进行事件绑定
+            v-on:事件名="事件处理函数名"
+            在vue中 事件处理函数统一声明在vue实例中 methods 属性
+    -->
+    <input type="button" value="点我" v-on:click="aaa" v-on:mouseover="bbb" v-on:mouseout="ccc">
+</div>
+
+<script src="js/vue.js"></script>
+<script>
+    var vue1 = new Vue({
+        el: "#app",
+        data: {
+            msg: "hello vud"
+        },
+        methods:{
+            //给当前vue实例对象 声明函数
+            aaa:function (){
+                alert('aaa')
+            },
+            bbb:function (){
+                console.log("鼠标移入")
+            },
+            ccc:function (){
+                console.log("鼠标移出")
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

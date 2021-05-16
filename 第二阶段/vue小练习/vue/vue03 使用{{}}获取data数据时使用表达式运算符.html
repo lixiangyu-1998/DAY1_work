@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+
+  {{msg}}
+<!--  使用这种方式获取数据时 可以进行相关的运算 算数 逻辑 调用获取值类型相关的js方法-->
+  <h2>{{msg+'nihao'}}</h2>
+  <h2>{{msg =='nihao'}}</h2>
+  <h2>{{msg.toUpperCase()}}</h2>
+<!--  不要用++  可能会按字符串运算 得出错误结果-->
+  <h2>{{age+1}}</h2>
+</div>
+
+<script src="js/vue.js"></script>
+<script>
+  var vue = new Vue({
+    el:"#app",
+    data:{
+      msg:"hello vue",
+      age:23,
+
+    }
+  });
+
+</script>
+</body>
+</html>

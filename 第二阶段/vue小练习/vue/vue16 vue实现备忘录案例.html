@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <!--  div作为容器 实现了vue全局管理  因为 el 是不能挂载body html 上的-->
+    {{msg}}<br/>
+    <!--    v-model 把标签的value 属性值 绑定vue实例 交给 vue实例进行管理 -->
+    输入备忘录内容:<input type="text" v-model="content"/>
+    <input type="button" @click="addItem" value="添加">
+    <ul>
+        <!--        v-for 将vue实例中的数据进行遍历-->
+        <li v-for="(item,index) in items">{{index + 1}}.{{item}}<a @click="removeItem(index)">删除</a></li>
+    </ul>
+    <h3>当前备忘录总数:{{items.length}}条</h3>
+    <input type="button" @click="clearAll" value="清空备忘录">
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var app = new Vue({
+        el: "#app", //vue实例的作用范围
+        data: {
+            //给vue实例绑定的数据
+            msg: "备忘录",
+            items: ["aaaaaaa", "bbbbbb"],
+            content: "",
+        },
+        methods: {
+            //在vue实例中定义相关函数
+            addItem: function () {
+                if (this.content===""){
+                    alert("请输入内容!")
+                    return;
+                }
+                console.log(this.content)
+                this.items.push(this.content);
+                this.content="";
+
+            },
+            removeItem:function (index){
+                //根据索引删除 数组元素 参数1 起始下表  参数2 删几个
+                this.items.splice(index,1);
+            },
+            clearAll:function (){
+                this.items=[];
+            }
+
+        }
+    });
+
+</script>
+
+</body>
+</html>

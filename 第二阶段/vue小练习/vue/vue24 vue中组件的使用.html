@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--vue中一切皆组件 基于业务划分n多个组件
+全局组件 一旦定义可以在任意组件中使用
+Vue.component():  此方式注册的是全局组件
+
+局部组件 在vue实例中定义 只能被内部使用
+new vue({
+....
+....
+component:{}//此方式注册的是局部组件
+})
+
+-->
+
+<div id="app">
+<!--使用全局组件 根据组件名称使用全局组件  写下名称后 按tab键 -->
+    <login></login>
+    <register></register>
+
+<!--    局部组件  -->
+    <login1></login1>
+    <register1></register1>
+
+</div>
+
+</body>
+</html>
+<template id="loginTemplate">
+    <div><h3>用户登录</h3></div>
+</template>
+
+<script src="js/vue.js"></script>
+<script src="js/axios.min.js"></script>
+<script>
+
+    //开发全局组件
+    //参数一 组件名称  参数二 指定组件内容的配置对象
+    Vue.component("login",{
+        //template 模版 用来书写 该组件中的 html代码 注意 template属性必须存在一个根容器 有且只有一个
+        //此时<div> </>div>  就是根 写template时一定要先写个div容器 在容器内写其他html代码
+        template:"<div><h3>用户登录</h3></div>"
+    });
+    Vue.component("register",{
+        template:"<div><h3>用户注册</h3></div>"
+    });
+
+
+    //定义登录组件配置对象
+    // const login1 ={
+    //     template:"<div><h3>用户登录</h3></div>"
+    // }
+
+    const login1 ={
+        //间接方式的间接方式  组件内容的配置对象 不在这里写了  而是在template标签中写
+        // 这里写相应template标签的id即可 虽然报红 但能用  此种方式 使用较多 脚手架中常用
+        template:"#loginTemplate"
+    };
+
+    const app = new Vue({
+        el: "#app",
+        data: {},
+        methods: {},
+        computed: {},
+        components: {
+            //在这里开发局部组件   组件名：{指定组件内容的配置对象}
+            // login1:{
+            //     template:"<div><h3>用户登录</h3></div>"
+            // },
+            //定义局部组件方式的一个间接做法  相当于把 组件内容的配置对象 先放在login1对象中 然后再告知login1: 即可
+            //login1:login1, es5 的写法
+            //es6的一个拓展  如果  login1:login1 一致 即组件名和存放组件内容配置对象的变量名一致
+            // 直接写login1 就好
+
+            //注册 登录页面
+            login1,
+
+            register1:{
+                template:"<div><h3>用户注册</h3></div>"
+            }
+        }
+    });
+</script>

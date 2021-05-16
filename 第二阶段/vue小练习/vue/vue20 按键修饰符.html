@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    {{msg}}
+    <!--
+      按键修饰符 作用  用来和键盘上的按键事件(keyup keydown....) 连用 用来修饰键盘上 特定的按键来触发对应的事件
+      .enter
+      .tab
+      .delete
+      .esc
+      .up0
+      .down
+      .left
+      .right
+
+    -->
+<!--       代表只会监听回车键的 抬起 并触发事件
+ 以此类推    .delete .down .right .esc  而且可以连用-->
+    <input type="text" v-model="msg" @keyup.enter="test">
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            msg: "按键事件修饰符"
+        },
+        methods: {
+            test: function () {
+                console.log("test");
+            }
+        },
+        computed: {}
+    });
+</script>
+</body>
+</html>

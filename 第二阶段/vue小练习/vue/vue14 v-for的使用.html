@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <!--  v-for     用来对vue实例中的数据进行遍历
+
+    -->
+    <h2>{{msg}}</h2>
+    <h2 v-for="(value,key,index) in user">
+        遍历对象很少用
+        index:{{index}} key:{{key}} value:{{value}}
+    </h2>
+    <h2 v-for="(school,index) in schools">
+        index:{{index}} name:{{school}}
+        遍历数组
+    </h2>
+<!--为了其能更好的渲染  使用v-for时最好给每一项加个唯一标识 业务中一般用id就可以 毕竟是主键
+这个东西不是给咱们用的 而是给vue看的 -->
+    <h2 v-for="(user,index) in users" :key="user.id">
+        遍历数组中含有对象 很常用
+        index:{{index+1}} name:{{user.name}} age:{{user.age}} bir:{{user.bir.toUpperCase()}}
+    </h2>
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            msg: "hello vue",
+            user: {name: "xx", age: 22, bir: "xxxx-xx-xx"},
+            schools: ["xx", "zz", "cc"],
+            users: [
+                {id:"1",name: "xx0", age: 22, bir: "xxxx-xx-xx"},
+                {id:"2",name: "xx1", age: 22, bir: "xxxx-xx-xx"},
+                {id:"3",name: "xx2", age: 22, bir: "xxxx-xx-xx"},
+                {id:"4",name: "xx3", age: 22, bir: "xxxx-xx-xx"},
+            ]
+        }
+    });
+</script>
+</body>
+</html>

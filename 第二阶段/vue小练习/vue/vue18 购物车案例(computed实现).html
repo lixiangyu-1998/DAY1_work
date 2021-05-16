@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    {{msg}}
+    <!--
+    computed  vue官方提供的一个 计算属性
+    作用 在完成某种业务时，往往页面需要经过多次计算才能获取，computed 属性就是来完成业务结果多次计算
+    好处 在完成计算的同时 也会将本次的计算结果 进行缓存 如果数据没有发生变化 在页面之中  仅仅计算一次
+    -->
+    <table border="1">
+        <tr>
+            <th>id</th>
+            <th>名称</th>
+            <th>价格</th>
+            <th>数量</th>
+            <th>小计</th>
+        </tr>
+        <tr v-for="(item,index) in items" :key="item.id">
+            <th>{{item.id}}</th>
+            <th>{{item.name}}</th>
+            <th>{{item.price}}</th>
+            <th><input type="button" value="-" @click="reduceItem(index)">
+                {{item.count}}<input @click="addItem(index)" type="button" value="+"></th>
+            <th>{{(item.price * item.count).toFixed(2)}}</th>
+        </tr>
+    </table>
+    <!--  使用methods 方法 完成计算业务
+    缺点：
+        只要调用了一次计算方法 整个计算方法就会执行一次  如果在一个页面中 多次使用计算结果
+        可能会造成重复计算 导致页面加载性能变低-->
+    <h3>总价格：{{TotalPrice}}</h3>
+    <h3>总价格：{{TotalPrice}}</h3>
+    <h3>总价格：{{TotalPrice}}</h3>
+    <h3>总价格：{{TotalPrice}}</h3>
+    <h3>总价格：{{TotalPrice}}</h3>
+    <h3>总价格：{{TotalPrice}}</h3>
+    <h3>总价格：{{TotalPrice}}</h3>
+
+</div>
+<script src="js/vue.js"></script>
+<script>
+    <!--   vue 确实比js jq 好用太多啦！！！！-->
+    var app = new Vue({
+        el: "#app",
+        data: {
+            msg: "购物车",
+            items: [
+                {id: 1, name: "xxx1", count: 1, price: 210},
+                {id: 2, name: "xxx2", count: 1, price: 420},
+                {id: 3, name: "xxx3", count: 1, price: 520},
+                {id: 4, name: "xxx4", count: 1, price: 720},
+            ]
+        },
+        methods: {
+            addItem: function (index) {
+
+                console.log(index);
+                console.log(this.items[index].count);
+                this.items[index].count++;
+            },
+            reduceItem: function (index) {
+                if (this.items[index].count < 1) {
+                    return;
+                }
+                this.items[index].count--;
+            },
+
+        },
+        computed:{
+            //用来定义和计算相关的方法 只进行一次计算 多次使用直接用缓存结果
+            //使用其方法时 无需加（）  只要写方法名就好了
+            TotalPrice: function () {
+                var totalPrice = 0;
+                for (var i = 0; i < this.items.length; i++) {
+                    totalPrice += this.items[i].price * this.items[i].count;
+                }
+                console.log(totalPrice)
+                return totalPrice.toFixed(2);
+            }
+        }
+    });
+
+</script>
+</body>
+</html>
