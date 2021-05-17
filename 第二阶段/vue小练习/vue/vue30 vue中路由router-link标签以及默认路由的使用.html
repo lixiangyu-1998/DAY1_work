@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<div id="app">
+
+    {{msg}}
+    <!--路由就是根据请求路径 按一定规则进行请求的转发 从而帮助我们实现统一请求的管理 -->
+    <!--    指定路由组件在哪里展示 用  router-view 标签-->
+    <!--    然后在网页中输入路径就会看到  router-view 相应的组件出现在标签处-->
+    <router-view></router-view>
+    <a href="#/users">用户管理</a>
+    <a href="#/emps">员工管理</a>
+    <!--    router-link 标签  作用 用来替换 a标签  书写路径时 不用加入 #号
+    tag  属性用来指定 router-link底层的渲染标签  默认为a标签 -->
+    <router-link to="/users" tag="button">用户管理</router-link>
+    <router-link to="/emps" tag="button">员工管理</router-link>
+
+</div>
+
+
+</body>
+</html>
+<script src="js/vue.js"></script>
+<script src="js/axios.min.js"></script>
+<script src="js/vue-router.js"></script>
+<script>
+    const users = {
+        template: '<div><h3>用户管理</h3></div>'
+    };
+    const emps = {
+        template: '<div><h3>员工管理</h3></div>'
+    }
+    //创建路由对象并定义路由规则
+    const router = new VueRouter({
+        routes: [
+            //用来定义一系列规则
+            //{path:"/",component:users },默认路由规则 不建议这么做 会有误区 users的路径到底是/ 还是/users ？
+            {path:"/",redirect:'/users' },//redirect:(路由路径重定向) 用这种方式 把根组件路径重定向到 /users
+            {path: '/users', component: users},//用来定义具体的某个组件的规则 path:用来指定对应请求路径
+            {path: '/emps', component: emps}//component 指定对应的组件
+        ]
+    })
+    const app = new Vue({
+        el: "#app",
+        data: {
+            msg: "vue中路由(router)的使用",
+        },
+        methods: {},
+        computed: {},
+        components: {},
+        //router:router,用来注册路由的配置
+        router,//es6 简写方式
+    })
+
+
+</script>

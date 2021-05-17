@@ -30,6 +30,7 @@
         var data1;
         //await等待异步操作执行完毕
         await axios.get("http://localhost:8080/vue_back/testServlet?id=23").then(res => {
+            console.log(res);
             console.log(res.data);
             // console.log(res.data.id);
             // console.log(res.data.name);

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div id="app">
+
+<login><h3>我是自定义的solt内容</h3></login>
+
+</div>
+</body>
+</html>
+<script src="js/vue.js"></script>
+<script src="js/axios.min.js"></script>
+<script>
+    //slot 插槽 用来扩展自定义组件 让组件变得更加灵活 用来个性化定制自己的组件
+    //插槽使用时 必须配合组件使用
+    const login={
+        //有slot标签 代表组件可拓展  相当于占位符 不赋值就没有 如何赋值呢 在上方使用模版时 写入
+        //还可以在slot标签中 写入数据 那么如果 使用组件时没替换slot 那么就默认显示 slot标签中写入的值
+    //<slot>默认显示</slot>
+        //可以给slot指定name属性 <slot name="aa"></slot> 那么在上方组件内使用时 可以加 slot="aa" 来指定填充特定的slot
+        template:"<div><h3>用户登录界面</h3><slot></slot></div>"
+    }
+    const app= new Vue({
+        el:"#app",
+        data:{},
+        methods:{},
+        computed:{},
+        components:{
+            login,
+        }
+    })
+</script>

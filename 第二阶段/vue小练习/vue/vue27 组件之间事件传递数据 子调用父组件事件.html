@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div id="app">
+<!--  使用局部组件 传递一个父组件中的事件  @事件别名="父组件中的指定事件名"
+表示将父组件中的指定事件名 findAll  以 事件别名 aa 传递给了 子组件-->
+  {{msg}}
+  <login @aa="findAll"></login>
+</div>
+</body>
+</html>
+<script src="js/vue.js"></script>
+<script src="js/axios.min.js"></script>
+<script>
+  //如何把父组件中的事件传递给子组件
+  //  需要在组件使用的位置绑定一个事件
+  const login={
+    template: "<div><h3>登录页面</h3><button @click='test'>click</button></div>",
+    data(){
+      return{
+        msg:"子组件的信息"
+      }
+    },
+    methods:{
+      test(){
+        alert("子组件事件...");
+        //$emit 用来调用传递进来的事件
+        //可以通过使用父组件传递过来的子组件 向父组件传递数据 用参数来传递接收
+        this.$emit("aa",this.msg);
+      }
+    }
+  }
+  const app = new Vue({
+    el: "#app",
+    data: {
+      msg: "vue组件事件传递",
+      name: "李翔宇",
+      age: 23,
+      user: {id: 1, name: "lxy", age: 23}
+    },
+    methods: {
+      findAll(msg) {
+        alert("父组件事件..." + msg)
+        //父组件事件 传递到子组件中调用 并通过参数接收到了子组件的数据
+        this.msg = msg;
+      }
+    },
+    computed: {},
+    components: {
+      login,
+    }
+  });
+</script>

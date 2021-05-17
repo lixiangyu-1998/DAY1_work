@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<div id="app">
+
+    {{msg}}
+
+    <router-link to="/products">商品管理</router-link>
+
+    <router-view></router-view>
+
+</div>
+
+
+</body>
+</html>
+<template id="productTemplate">
+    <div>
+        <h3>商品列表</h3>
+        <a href="#/products/add">添加商品信息</a>
+        <table border="1">
+            <tr>
+                <th>编号</th>
+                <th>名称</th>
+                <th>价格</th>
+                <th>生产日期</th>
+                <th>操作</th>
+            </tr>
+            <tr>
+                <th>1</th>
+                <th>xx</th>
+                <th>455</th>
+                <th>xxxx-xx-xx</th>
+                <th><a href="" >删除</a> <a href="#/products/edit" @click.prevent="editRow({id:1,name:'lixiangyu'})" >修改</a></th>
+            </tr>
+        </table>
+<!--        router——view 用来展示子组件路由-->
+        <router-view></router-view>
+    </div>
+
+</template>
+<script src="js/vue.js"></script>
+<script src="js/axios.min.js"></script>
+<script src="js/vue-router.js"></script>
+<script>
+    const products = {
+        template: "#productTemplate",
+        methods: {
+            editRow(user){
+                console.log(user);
+                //切换路由路径  通过query 方式 传递数据
+                this.$router.push({path:'/products/edit',query:user})
+            }
+        }
+
+    };
+    //子组件
+    const add = {
+        template: '<div><form action="">商品名称：<input type="text"><br>' +
+            '商品价格：<input type="text"><br>' +
+            '<input type="button" value="保存商品"> </form></div>',
+
+    }
+    const edit = {
+        template: '<div><form action="">商品名称：<input type="text" v-model="user.name"><br>' +
+            '商品价格：<input type="text" v-model="user.id"><br>' +
+            '<input type="button" value="确认修改"> </form></div>',
+        data(){
+            return {};
+        },
+        methods:{},
+        created(){
+            console.log("edit:",this.$route.query);
+            this.user=this.$route.query
+        }
+
+    }
+    //创建路由对象并定义路由规则
+    const router = new VueRouter({
+        routes: [
+            {path: "/", redirect: '/products'},
+            {
+                path: '/products',
+                name: "products",
+                component: products,
+                children: [
+                    //通过children 来定义子路由 注意 子路由的path属性不能 以 / 开头 因为 / 代表跟路由
+                    {path: 'add', name: "add", component: add},
+                    {path: 'edit', name: "edit", component: edit},
+
+                ]
+            },
+
+        ]
+    })
+    const app = new Vue({
+        el: "#app",
+        data: {
+            msg: "vue中路由(router)的使用",
+        },
+        methods: {},
+        computed: {},
+        components: {},
+        //router:router,用来注册路由的配置
+        router,//es6 简写方式
+    })
+
+
+</script>
